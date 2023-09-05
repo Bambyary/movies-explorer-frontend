@@ -1,0 +1,32 @@
+.promo {
+    background-color: #F3C1F8;
+    width: 100%;
+    min-height: 430px;
+    margin: 0 auto;
+    display: flex;
+    background-image: url('../../images/pic-pra.svg');
+    background-size: 320px 320px;
+    background-position-x: center;
+    background-position-y: 82px;
+    background-repeat: no-repeat;
+    padding: 94px 0 0;
+}
+
+@media screen and (max-width: 800px) {
+    .promo {
+        padding: 247px 0 0;
+        background-size: 320px 320px;
+        background-position-y: 224px;
+        min-height: 537px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .promo {
+        padding: 147px 0 0;
+        background-size: 248px 248px;
+        background-position-y: 148px;
+        min-height: 423px;
+    }
+}
+

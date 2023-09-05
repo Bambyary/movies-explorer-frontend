@@ -1,0 +1,33 @@
+.navigation {
+    background-color: #000;
+    width: 100%;
+    display: flex;
+    min-height: 66px;
+    align-items: center;
+    column-gap: 40px;
+    justify-content: center;
+}
+
+.navigation__link {
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.navigation__link:hover {
+    opacity: .7;
+}
+
+@media screen and (max-width: 550px) {
+
+    .navigation {
+        column-gap: 25px;
+    }
+
+    .navigation__link {
+        font-size: 11px;
+        line-height: 1.4;
+    }
+}
