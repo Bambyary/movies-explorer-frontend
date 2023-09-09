@@ -30,6 +30,11 @@
     color: #000000;
     min-width: 42px;
     margin: 0 auto 4.68%;
+    cursor: pointer;
+}
+
+.error__link:hover {
+    opacity: .7;
 }
 
 @media screen and (max-width: 800px) {

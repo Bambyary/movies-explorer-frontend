@@ -11,28 +11,29 @@ function Login () {
             link='Регистрация'
             path='/signup'
             name='registration-form'>
-                <fieldset className="register__fieldset">
-                <label className="register__label" htmlFor='register-email'>
-                    E-mail
-                    <input className="register__input" 
-                        id='register-email' 
-                        name='email' 
-                        type='email'
-                        placeholder='E-mail'
-                        minLength='2' maxLength='30'
-                        required />
-                    <span className="register__error"></span>
-                </label>
-                <label className="register__label" htmlFor='register-password'>
-                    Пароль
-                    <input className="register__input" 
-                        id='register-password' 
-                        name='password'
-                        type='password'
-                        placeholder='Пароль'
-                        required />
-                    <span className="register__error"></span>
-                </label>
+                <fieldset className="register">
+                    <label className="register__label" htmlFor='register-email'>
+                        E-mail
+                        <input className="register__input" 
+                            id='register-email' 
+                            name='email' 
+                            type='email'
+                            placeholder='E-mail'
+                            minLength='2' maxLength='30'
+                            required />
+                        <span className="register__error"></span>
+                    </label>
+                    <label className="register__label" htmlFor='register-password'>
+                        Пароль
+                        <input className="register__input" 
+                            id='register-password' 
+                            name='password'
+                            type='password'
+                            minLength='2' maxLength='30'
+                            placeholder='Пароль'
+                            required />
+                        <span className="register__error"></span>
+                    </label>
                 </fieldset>
         </FormRegistration>
     )

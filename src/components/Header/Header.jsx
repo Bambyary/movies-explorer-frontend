@@ -17,7 +17,7 @@ function Header (props) {
                 {props.isLoggedIn ? 
                     <>
                         <Navigation />
-                        <Burger/>
+                        <Burger />
                     </>
                 :
                 <nav className="header__navigation">

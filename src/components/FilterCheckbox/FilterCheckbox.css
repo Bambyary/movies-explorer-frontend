@@ -1,5 +1,5 @@
-.filter-checkbox__label {
-    width: 16.8%;
+.filter-checkbox {
+    width: 191px;
     display: inline-block;
     text-align: end;
     float: right;
@@ -20,6 +20,7 @@
     line-height: 1.38;
     padding-left: 76px;
     position: relative;
+    cursor: pointer;
 }
 
 .filter-checkbox__span::before {
@@ -60,8 +61,8 @@
 
 @media screen and (max-width: 800px) {
 
-    .filter-checkbox__label {
-        width: 26%
+    .filter-checkbox {
+        width: 177px;
     }
 
     .filter-checkbox__span {
@@ -84,11 +85,12 @@
 
 @media screen and (max-width: 700px) {
     
-    .filter-checkbox__label {
-        width: 50%;
-        margin-top: 46px;
+    .filter-checkbox {
+        width: 57%;
+        margin-top: 65px;
         display: flex;
         justify-content: center;
+        padding-right: 24px;
     }
 
     .filter-checkbox__span {

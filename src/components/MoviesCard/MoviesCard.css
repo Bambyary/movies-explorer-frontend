@@ -1,6 +1,7 @@
 .card {
     max-width: 360px;
     position: relative;
+    list-style-type: none;
 }
 
 .card__img {
@@ -112,6 +113,11 @@
     }
 
     .card__img-save {
+        top: 10px;
+        right: 10px;
+    }
+
+    .card__button-save {
         top: 10px;
         right: 10px;
     }

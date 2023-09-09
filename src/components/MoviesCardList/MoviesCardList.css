@@ -1,4 +1,8 @@
 .card-list {
+    width: 100%;
+}
+
+.card-list__container {
     width: 89%;
     margin: 0 auto ;
     padding: 79px 0 0;
@@ -10,7 +14,7 @@
 }
 
 @media screen and (max-width: 1000px) {
-    .card-list {
+    .card-list__container {
         width: 92.1%;
         grid-template-columns: repeat(2, minmax(250px, 1fr));
         justify-items: center;
@@ -20,7 +24,7 @@
 }
 
 @media screen and (max-width: 600px) {
-    .card-list {
+    .card-list__container {
         width: 93.75%;
         grid-template-columns: repeat(1, minmax(250px, 1fr));
         row-gap: 39px;

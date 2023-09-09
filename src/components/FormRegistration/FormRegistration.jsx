@@ -1,22 +1,22 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
-import '../Register/Register.css';
+import './FormRegistration.css';
 
 function FormRegistration (props) {
     return (
-        <section className="register" id={props.name}>
-            <Link className="register__link"to='/'><img className="register__logo" src={logo} alt="Логотип" /></Link>
-            <h1 className="register__title">{props.title}</h1>
-            <form className="register__form" name={props.name}>
+        <main className="form-registration" id={props.name}>
+            <Link className="form-registration__link"to='/'><img className="form-registration__logo" src={logo} alt="Логотип" /></Link>
+            <h1 className="form-registration__title">{props.title}</h1>
+            <form className="form-registration__form" name={props.name}>
                 {props.children}
             </form>
-            <button className="register__button" type='submit'>{props.button}</button>
-            <div className="register__container">
-                <p className="register__text">{props.text}</p>
-                <Link className="register__link" to={props.path}>{props.link}</Link>
+            <button className="form-registration__button" type='submit'>{props.button}</button>
+            <div className="form-registration__container">
+                <p className="form-registration__text">{props.text}</p>
+                <Link className="form-registration__link" to={props.path}>{props.link}</Link>
             </div>
-        </section>
+        </main>
     )
 }
 

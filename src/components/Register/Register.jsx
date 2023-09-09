@@ -12,7 +12,7 @@ function Register () {
             path='/signin'
             name='login-form'
             >
-                <fieldset className="register__fieldset register__fieldset_margin">
+                <fieldset className="register register_margin">
                     <label className="register__label" htmlFor='register-name'>
                         Имя
                         <input className="register__input" 
@@ -42,6 +42,7 @@ function Register () {
                         name='password' 
                         type='password'
                         placeholder='Пароль'
+                        minLength='2' maxLength='30'
                         required />
                         <span className="register__error"></span>
                     </label>   

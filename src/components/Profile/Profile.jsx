@@ -18,7 +18,7 @@ function Profile (props) {
     return (
         <>
             <Header isLoggedIn={props.isLoggedIn} />
-            <section className="profile">
+            <main className="profile">
                 <h1 className="profile__title">Привет, Марина!</h1>
                 <form className="profile__form" name='profile-form'>
                     <fieldset className="profile__info">
@@ -56,7 +56,7 @@ function Profile (props) {
                         <button className="profile__button-save" type="submit" onClick={handleButtonSaveClick}>Сохранить</button>
                     </div>}
 
-            </section>
+            </main>
         </>
     )
 }
