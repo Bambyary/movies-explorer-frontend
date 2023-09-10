@@ -49,7 +49,7 @@ function Profile (props) {
                     {!isClicked ? 
                         <div className="profile__button-container">
                             <button className="profile__button-edit" type='button' onClick={handleButtonEditClick}>Редактировать</button>
-                            <button className="profile__button-exit" type='button'><Link className="profile__link" to='/'>Выйти из аккаунта</Link></button>
+                            <Link className="profile__link" to='/'>Выйти из аккаунта</Link>
                         </div>
                         :
                         <div className="profile__button-save-container">
