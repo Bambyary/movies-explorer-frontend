@@ -1,7 +1,8 @@
 .card {
-    max-width: 360px;
+    width: 100%;
     position: relative;
     list-style-type: none;
+    margin: 0 auto;
 }
 
 .card__img {

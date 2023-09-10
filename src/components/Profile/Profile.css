@@ -3,6 +3,10 @@
     margin: 74px auto 70px;
 }
 
+.profile__section {
+    width: 100%;
+}
+
 .profile__title {
     margin: 0;
     padding: 0 0 122px;

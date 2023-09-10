@@ -24,7 +24,7 @@ function Navigation (props) {
     }
 
     return (
-        <section className={`navigation__menu ${props.isNavigationActive ? 'navigation-menu_overlay' : ''}`}>
+        <section className={`navigation-menu ${props.isNavigationActive ? 'navigation-menu_overlay' : ''}`}>
             <nav className={`navigation-menu__container ${props.isNavigationActive ? 'navigation-menu__container_active' : ''}`}>
                 <ul className="navigation-menu__links">
                     <li className="navigation-menu__list"><Link className="navigation-menu__link navigation-menu__link_font-size navigation-menu__link_visible" to='/'>Главная</Link></li>

@@ -2,7 +2,7 @@ import React from "react";
 import './MoviesCardList.css';
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList (props) {
+function MoviesCardList () {
     return (
         <section className="card-list">
             <ul className="card-list__container">

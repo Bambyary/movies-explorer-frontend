@@ -12,12 +12,31 @@
     padding: 94px 0 0;
 }
 
+.promo__title {
+    margin: 0 auto;
+    padding: 90px 0 0;
+    width: 57%;
+    font-weight: 400;
+    font-size: 50px;
+    letter-spacing: -2px;
+    line-height: 1.16;
+    text-align: center;
+}
+
 @media screen and (max-width: 800px) {
     .promo {
         padding: 247px 0 0;
         background-size: 320px 320px;
         background-position-y: 224px;
         min-height: 537px;
+    }
+
+    .promo__title {
+        width: 93.7%;
+        font-size: 50px;
+        letter-spacing: -2px;
+        line-height: 1.16;
+        padding: 77px 0 0;
     }
 }
 
@@ -27,6 +46,13 @@
         background-size: 248px 248px;
         background-position-y: 142px;
         min-height: 423px;
+    }
+
+    .promo__title {
+        font-size: 31px;
+        letter-spacing: -1.24px;
+        line-height: 1.25;
+        padding: 60px 0 0;
     }
 }
 

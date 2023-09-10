@@ -1,14 +1,13 @@
 import React from "react";
 import './Techs.css';
 import Subtitle from '../Subitle/Subtitle';
-import Title from '../Title/Title';
 
 function Techs () {
     return (
         <section id='techs' className="techs">
             <article className="techs__body">
                 <Subtitle text='Технологии' />
-                <Title text='7 технологий' />
+                <h3 className="techs__title">7 технологий</h3>
                 <p className="techs__text">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
                 <ul className="techs__lists">
                     <li className="techs__list">HTML</li>
