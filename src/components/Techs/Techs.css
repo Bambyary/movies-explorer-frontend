@@ -1,0 +1,127 @@
+.techs {
+    width: 100%;
+    background-color: #F5F5F5;
+}
+
+.techs__body {
+    width: 89%;
+    margin: 0 auto;
+    padding: 100px 0;
+}
+
+.techs__title {
+    margin: 0 auto;
+    padding: 90px 0 0;
+    width: 57%;
+    font-weight: 400;
+    font-size: 50px;
+    letter-spacing: -2px;
+    line-height: 1.16;
+    text-align: center;
+}
+
+.techs__text {
+    margin: 0 auto;
+    padding: 26px 0 100px;
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -0.56px;
+    width: 40%;
+    text-align: center;
+}
+
+.techs__lists {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+    display: flex;
+    width: 61%;
+    column-gap: 10px;
+    justify-content: center;
+}
+
+.techs__list {
+    padding: 0;
+    width: 90px;
+    height: 60px;
+    background-color: #E8E8E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    letter-spacing: -0.56px;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 800px) {
+    .techs__body {
+        width: 87%;
+        padding: 91px 0;
+    }
+
+    .techs__title {
+        width: 93.7%;
+        font-size: 50px;
+        letter-spacing: -2px;
+        line-height: 1.16;
+        padding: 77px 0 0;
+    }
+
+    .techs__text {
+        font-size: 12px;
+        line-height: 1.5;
+        letter-spacing: -0.48px;
+        width: 68.8%;
+        padding: 22px 0 80px;
+    }
+
+    .techs__lists {
+        width: 97%;
+    }
+}
+
+
+@media screen and (max-width: 550px) {
+    .techs__body {
+        width: 88.75%;
+        padding: 71px 0;
+    }
+
+    .techs__lists {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(84px, 1fr));
+        grid-auto-rows: repeat(auto-fit);
+        gap: 10px;
+        width: 380px;
+    }
+
+    .techs__list {
+        min-width: 84px;
+        min-height: 58px;
+    }
+
+    .techs__text {
+        padding: 22px 0 48px;
+        font-size: 11px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .techs__lists {
+        grid-template-columns: repeat(2, minmax(84px, 1fr));
+        width: 180px;
+    }
+
+    .techs__list {
+        width: 84px;
+        height: 57px;
+    }
+
+    .techs__title {
+        font-size: 31px;
+        letter-spacing: -1.24px;
+        line-height: 1.25;
+        padding: 60px 0 0;
+    }
+}

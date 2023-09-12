@@ -1,0 +1,232 @@
+.navigation-menu {
+    width: 100%;
+}
+
+.navigation-menu_overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.navigation-menu__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    column-gap: 30px;
+}
+
+.navigation-menu__links {
+    min-width: 238px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px 0 0;
+    padding: 0;
+}
+
+.navigation-menu__list {
+    list-style-type: none;
+}
+
+.navigation-menu__link {
+    font-size: 12px;
+    text-decoration: none;
+    color: #000;
+    line-height: 1.3;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    column-gap: 13px;
+}
+
+.navigation-menu__link_visible {
+    display: none;
+}
+
+.navigation-menu__link_checked {
+    font-weight: 500;
+}
+
+.navigation-menu__link_color {
+    color: #fff;
+}
+
+.navigation-menu__link:hover {
+    opacity: .7;
+}
+
+
+.navigation-menu__link_font-size {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.navigation-menu__account-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 13px;
+}
+
+.navigation-menu__icon {
+    background-color: #000;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navigation-menu__icon-background {
+    background-color: #F9F9F9;
+}
+
+.navigation-menu__icon-img {
+    width: 10.383px;
+    height: 10.669px;
+}
+
+.navigation-menu__button {
+    display: none;
+}
+
+@media screen and (max-width: 800px) {
+
+    @keyframes burger-active {
+        0% {
+            right: -100%;
+        } 
+
+        100% {
+            right: 0%;
+        }
+    }
+
+    @keyframes burger-unactive {
+        0% {
+            right: 0%;
+        }
+
+        100% {
+            right: -200%;
+        }
+    }
+
+    .navigation-menu_overlay {
+        display: block;
+    }
+
+    .navigation-menu__container {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 68vw;
+        height: 100vh;
+        background-color: #fff;
+        z-index: 2;
+    }
+
+
+    .navigation-menu__container_active {
+        display: flex;
+        flex-direction: column;
+
+        animation-name: burger-active;
+        animation-duration: .4s;
+        animation-timing-function: linear;
+
+        z-index: 2;
+    }
+
+    .navigation-menu__container_inactive {
+        display: flex;
+        flex-direction: column;
+
+        animation-name: burger-unactive;
+        animation-fill-mode: forwards;
+        animation-duration: .4s;
+        animation-timing-function: linear;
+    }
+
+    .navigation-menu__links {
+        width: 65.3%;
+        margin: 0 auto;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 28px;
+        padding: 159px 0 0;
+    }
+
+
+    .navigation-menu__account-link {
+        margin: 0 auto;
+        padding: 0 0 92px;
+    }
+
+    .navigation-menu__link_visible {
+        display: block;
+    }
+
+    .navigation-menu__links .navigation-menu__link_checked {
+        border-bottom: 2px solid #000;
+    }
+
+    .navigation-menu__button {
+        background-color: transparent;
+        border: none;
+        display: block;
+        position: absolute;
+        top: 25px;
+        right: 27px;
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .navigation-menu__button:hover {
+        opacity: .8;
+    }
+
+    .navigation-menu__exit {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .navigation-menu__icon {
+        background-color: transparent;
+    }
+
+    .navigation-menu__links .navigation-menu__link {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: normal;
+    }
+    
+}
+
+@media screen and (max-width: 450px) {
+    .navigation-menu__container {
+        width: 100%;
+    }
+
+    .navigation-menu__links {
+        padding: 144px 0 0;
+        row-gap: 24px;
+    }
+
+    .navigation-menu__account-link {
+        padding: 0 0 48px;
+    }
+    
+}
+

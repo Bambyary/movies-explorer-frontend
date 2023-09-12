@@ -1,0 +1,141 @@
+.about-project {
+    width: 89%;
+    margin: 110px auto;
+}
+
+.about-project__description {
+    margin-top: 70px;
+    width: 100%;
+    display: flex;
+    column-gap: 40px;
+}
+
+.about-project__column {
+    width: 50%;
+}
+
+.about-project__subtitle {
+    margin: 0;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0 0 26px;
+    letter-spacing: -0.8px;
+}
+
+.about-project__text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.about-project__parts {
+    width: 100%;
+    display: flex;
+    padding-top: 109px;
+}
+
+.about-project__weeks {
+    width: 20%;
+    margin: 0;
+}
+
+.about-project__weeks_width {
+    width: 80%;
+}
+
+.about-project__week {
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 9px 0;
+    font-size: 14px;
+}
+
+.about-project__week_color {
+    background-color: #F2F2F2;
+    color: #000;
+}
+
+.about-project__task {
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #A0A0A0;
+    padding: 14px 0 0;
+    margin: 0;
+}
+
+@media screen and (max-width: 800px) {
+    .about-project {
+        margin: 90px auto;
+        width: 87%;
+    }
+
+    .about-project__text {
+        font-size: 12px;
+    }
+
+    .about-project__column {
+        width: 46%;
+    }
+
+    .about-project__subtitle {
+        padding: 0 0 21px;
+    }
+
+    .about-project__parts {
+        padding-top: 96px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .about-project  {
+        width: 88.75%;
+        margin: 71px auto;
+    }
+
+    .about-project__description {
+        flex-direction: column;
+        margin-top: 63px;
+    }
+
+    .about-project__subtitle {
+        font-size: 18px;
+        letter-spacing: -0.72px;
+        padding: 0 0 15px;
+    }
+
+    .about-project__column {
+        width: 100%;
+    }
+
+    .about-project__text {
+        font-size: 11px;
+        padding-bottom: 58px;
+    }
+
+    .about-project__parts {
+        padding-top: 4px;
+    }
+
+    .about-project__weeks {
+        width: 41%;
+    }
+
+    .about-project__weeks_width {
+        width: 74%;
+    }
+
+    .about-project__week {
+        font-size: 11px;
+        padding: 11px 0;
+    }
+
+    .about-project__task {
+        padding: 9px 0 0;
+        font-size: 11px;
+    }
+}

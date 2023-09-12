@@ -1,0 +1,16 @@
+.subtitle {
+    margin: 0;
+    padding: 0 0 26px;
+    width: 100%;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.88px;
+    border-bottom: 1px solid #000;
+}
+
+@media screen and (max-width: 767px) {
+    .subtitle {
+        font-size: 18px;
+        letter-spacing: -0.82px;
+    }
+}
