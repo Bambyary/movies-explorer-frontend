@@ -27,7 +27,7 @@ function Profile (props) {
                                 <input className="profile__input" 
                                     id='name' 
                                     type="text"
-                                    placeholder="Марина"
+                                    placeholder={props.userInfo.name}
                                     minLength='2' maxLength='30'
                                     required
                                     disabled={!isClicked} />
@@ -38,7 +38,7 @@ function Profile (props) {
                                 <input className="profile__input" 
                                     id='email' 
                                     type="email"
-                                    placeholder="pochta@yandex.ru"
+                                    placeholder={props.userInfo.email}
                                     minLength='2' maxLength='30'
                                     required
                                     disabled={!isClicked} />

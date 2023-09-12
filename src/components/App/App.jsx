@@ -8,10 +8,39 @@ import Register from '../Register/Register';
 import Profile from '../Profile/Profile';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import { getToken } from '../../utils/MainApi';
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [userInfo, setUserInfo] = React.useState({});
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, [isLoggedIn])
+
+  //Функция, которая пробрасывает токен на сервер для авторизации пользователя
+  function tokenCheck () {
+    if(localStorage.getItem('token')) {
+      const token = localStorage.getItem('token');
+      getToken(token)
+      .then(data => {
+        if(data) {
+          setUserInfo({
+            name: data.name,
+            email: data.email
+          })
+          setIsLoggedIn(true);
+        } else {
+          return
+        }
+      })
+      .catch(err => {
+        setIsLoggedIn(false);
+        return `Произошла ошибка ${err}`
+      })
+    }
+  }
 
   return (
     <div className='app'>
@@ -20,7 +49,7 @@ function App() {
         <Route path='*' element={<NotFound />} />
         <Route path='/signin' element={<Login />} />
         <Route path='signup' element={<Register />} />
-        <Route path='/profile' element={<Profile isLoggedIn={isLoggedIn} />} />
+        <Route path='/profile' element={<Profile isLoggedIn={isLoggedIn} userInfo={userInfo} />} />
         <Route path='/movies' element={<Movies isLoggedIn={isLoggedIn} />} />
         <Route path='/saved-movies' element={<SavedMovies isLoggedIn={isLoggedIn} />} />
       </Routes>

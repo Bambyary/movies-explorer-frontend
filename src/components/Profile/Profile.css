@@ -52,6 +52,7 @@
     display: block;
     text-align: right;
     float: right;
+    background-color: #fff;
 }
 
 .profile__input::placeholder {

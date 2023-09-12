@@ -2,6 +2,8 @@ import React from "react";
 import '../Register/Register.css';
 import FormRegistration from "../FormRegistration/FormRegistration";
 import {validationLogin} from '../../utils/validation';
+import { authorize } from '../../utils/MainApi';
+import { useNavigate } from 'react-router-dom';
 
 function Login () {
 
@@ -23,6 +25,9 @@ function Login () {
 
     //Создаём переменную, которая проверяет состояние фокуса у полей ввода
     const [isFocused, setIsFocused] = React.useState(false);
+
+    //Записываем в переменную useNavigate()
+    const navigate = useNavigate();
 
     //Этот useEffect сбрасывает значения полей форм при обновлении страницы
     React.useEffect(() => {
@@ -53,6 +58,23 @@ function Login () {
         setIsFocused(false);
     }
 
+    //Функция авторизации
+    function handleSubmit (e) {
+        e.preventDefault()
+        
+        authorize(email, password)
+        .then(data => {
+            if(data.token) {
+                setIsEmail('');
+                setIsPassword('')
+                navigate('/movies', { replace : true })
+            }
+        })
+        .catch(err => {
+            return `Возникла ошибка: ${err}`
+        })
+    }
+
     return (
         <FormRegistration 
             title='Рады видеть!' 
@@ -61,7 +83,8 @@ function Login () {
             link='Регистрация'
             path='/signup'
             name='registration-form'
-            formValid={formValid}>
+            formValid={formValid}
+            handleSubmit={handleSubmit}>
                 <section className="register">
                     <fieldset className="register__fieldset">
                         <label className="register__label" htmlFor='register-email'>
