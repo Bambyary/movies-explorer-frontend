@@ -45,6 +45,12 @@
     opacity: .8;
 }
 
+.form-registration__button_inactive {
+    background-color: #F8F8F8;
+    color: #C2C2C2;
+    cursor: default;
+}
+
 .form-registration__container {
     width: 100%;
     display: flex;

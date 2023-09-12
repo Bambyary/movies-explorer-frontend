@@ -1,8 +1,58 @@
 import React from "react";
 import '../Register/Register.css';
 import FormRegistration from "../FormRegistration/FormRegistration";
+import {validationLogin} from '../../utils/validation';
 
 function Login () {
+
+    //Создаём переменные, в которые будут записываться значения из полей ввода
+    const [email, setIsEmail] = React.useState('');
+    const [password, setIsPassword] = React.useState('');
+
+    //Создаём переменную с объектом, в который будет записываться валидность каждого поля ввода
+    const [isFormValidity, setIsFormValidity] = React.useState({ emailValid: false, passwordValid: false });
+    const emailValidity = isFormValidity.emailValid;
+    const passwordValidity = isFormValidity.passwordValid;
+
+    //Создаём переменную, которая проверит всю  форму на валидность
+    const formValid = emailValidity && passwordValidity;
+
+    //Создаём переменные, в которые будет записываться текст ошибки
+    const [emailError, setIsEmailError] = React.useState('');
+    const [passwordError, setIsPasswordError] = React.useState('');
+
+    //Создаём переменную, которая проверяет состояние фокуса у полей ввода
+    const [isFocused, setIsFocused] = React.useState(false);
+
+    //Этот useEffect сбрасывает значения полей форм при обновлении страницы
+    React.useEffect(() => {
+        setIsEmail('');
+        setIsPassword('');
+    }, [])
+
+    //Этот useEffect запускает функцию валидации
+    React.useEffect(() => {
+        validationLogin({email, password, setIsEmailError, setIsPasswordError, setIsFormValidity, isFocused})
+    }, [email, password, setIsFormValidity, setIsFocused])
+
+    //Создаём функции, которые будут записывать значения каждого поля ввода в соответствующую переменную
+    function handleEmailChange (e) {
+        setIsEmail(e.target.value);
+    }
+
+    function handlePasswordChange (e) {
+        setIsPassword(e.target.value);
+    }
+
+    //Функции, меняющие состояние фокуса на полях ввода
+    function handleFocus () {
+        setIsFocused(true);
+    }
+
+    function handleBlur () {
+        setIsFocused(false);
+    }
+
     return (
         <FormRegistration 
             title='Рады видеть!' 
@@ -10,30 +60,39 @@ function Login () {
             text='Ещё не зарегистрированы?' 
             link='Регистрация'
             path='/signup'
-            name='registration-form'>
+            name='registration-form'
+            formValid={formValid}>
                 <section className="register">
                     <fieldset className="register__fieldset">
                         <label className="register__label" htmlFor='register-email'>
                             E-mail
-                            <input className="register__input" 
+                            <input className={`register__input ${!emailValidity && email !== '' && 'register__input_error register__input_error'}`}  
                                 id='register-email' 
                                 name='email' 
                                 type='email'
                                 placeholder='E-mail'
                                 minLength='2' maxLength='30'
-                                required />
-                            <span className="register__error"></span>
+                                required
+                                value={email || ''}
+                                onChange={handleEmailChange}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur} />
+                            <span className="register__error">{emailError}</span>
                         </label>
                         <label className="register__label" htmlFor='register-password'>
                             Пароль
-                            <input className="register__input" 
+                            <input className={`register__input ${!passwordValidity && password !== '' && 'register__input_error register__input_error'}`}
                                 id='register-password' 
                                 name='password'
                                 type='password'
-                                minLength='2' maxLength='30'
+                                minLength='6' maxLength='30'
                                 placeholder='Пароль'
-                                required />
-                            <span className="register__error"></span>
+                                required
+                                value={password || ''}
+                                onChange={handlePasswordChange}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur} />
+                            <span className="register__error">{passwordError}</span>
                         </label>
                     </fieldset>
                 </section>

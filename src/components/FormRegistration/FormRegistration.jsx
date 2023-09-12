@@ -12,7 +12,7 @@ function FormRegistration (props) {
                 <form className="form-registration__form" name={props.name}>
                     {props.children}
                 </form>
-                <button className="form-registration__button" type='submit'>{props.button}</button>
+                <button className={`form-registration__button ${!props.formValid && 'form-registration__button_inactive'}`} disabled={!props.formValid} type='submit'>{props.button}</button>
                 <div className="form-registration__container">
                     <p className="form-registration__text">{props.text}</p>
                     <Link className="form-registration__link" to={props.path}>{props.link}</Link>
