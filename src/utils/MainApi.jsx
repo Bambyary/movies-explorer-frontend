@@ -17,7 +17,7 @@ export function register (name, email, password) {
         if(res.ok) {
             return res.json();
         } else {
-            console.log(res.status);
+            return res.status;
         }
     })
     .then(res => res)
@@ -36,7 +36,7 @@ export function authorize ( email, password ) {
         if(res.status === 200) {
             return res.json();
         } else {
-            console.log(res.status);
+            return res.status;
         }
     })
     .then(data => {
@@ -44,7 +44,7 @@ export function authorize ( email, password ) {
             localStorage.setItem('token', data.token);
             return data;
         } else {
-            return
+            return data;
         }
     })
 }
@@ -62,8 +62,28 @@ export function getToken (token) {
         if(res.status === 200) {
             return res.json();
         } else {
-            console.log(res.status)
+            return res.status;
         }
     })
     .then(data => data)
+}
+
+export function editProfile (name, email) {
+    return fetch(`${BASE_URL}/users/me`, {
+        method: 'PATCH',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({name, email})
+    })
+    .then(res => {
+        if(res.ok) {
+            return res.json()
+        } else {
+            return res.status;
+        }
+    })
+    .then(data => data);
 }

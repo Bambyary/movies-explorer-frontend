@@ -28,6 +28,16 @@
     margin: 0;
 }
 
+.form-registration__error {
+    display: block;
+    width: 100%;
+    color: #FF004C;
+    text-align: center;
+    padding-bottom: 20px;
+    min-height: 14px;
+    font-size: 11px;
+}
+
 .form-registration__button {
     width: 100%;
     margin: 0 0 16px;

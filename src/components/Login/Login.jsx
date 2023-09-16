@@ -5,11 +5,11 @@ import {validationLogin} from '../../utils/validation';
 import { authorize } from '../../utils/MainApi';
 import { useNavigate } from 'react-router-dom';
 
-function Login () {
+function Login (props) {
 
     //Создаём переменные, в которые будут записываться значения из полей ввода
-    const [email, setIsEmail] = React.useState('');
-    const [password, setIsPassword] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     //Создаём переменную с объектом, в который будет записываться валидность каждого поля ввода
     const [isFormValidity, setIsFormValidity] = React.useState({ emailValid: false, passwordValid: false });
@@ -20,8 +20,9 @@ function Login () {
     const formValid = emailValidity && passwordValidity;
 
     //Создаём переменные, в которые будет записываться текст ошибки
-    const [emailError, setIsEmailError] = React.useState('');
-    const [passwordError, setIsPasswordError] = React.useState('');
+    const [emailError, setEmailError] = React.useState('');
+    const [passwordError, setPasswordError] = React.useState('');
+    const [submitError, setSubmitError] = React.useState('');
 
     //Создаём переменную, которая проверяет состояние фокуса у полей ввода
     const [isFocused, setIsFocused] = React.useState(false);
@@ -31,22 +32,22 @@ function Login () {
 
     //Этот useEffect сбрасывает значения полей форм при обновлении страницы
     React.useEffect(() => {
-        setIsEmail('');
-        setIsPassword('');
+        setEmail('');
+        setPassword('');
     }, [])
 
     //Этот useEffect запускает функцию валидации
     React.useEffect(() => {
-        validationLogin({email, password, setIsEmailError, setIsPasswordError, setIsFormValidity, isFocused})
+        validationLogin({email, password, setEmailError, setPasswordError, setIsFormValidity, isFocused})
     }, [email, password, setIsFormValidity, setIsFocused])
 
     //Создаём функции, которые будут записывать значения каждого поля ввода в соответствующую переменную
     function handleEmailChange (e) {
-        setIsEmail(e.target.value);
+        setEmail(e.target.value);
     }
 
     function handlePasswordChange (e) {
-        setIsPassword(e.target.value);
+        setPassword(e.target.value);
     }
 
     //Функции, меняющие состояние фокуса на полях ввода
@@ -65,9 +66,16 @@ function Login () {
         authorize(email, password)
         .then(data => {
             if(data.token) {
-                setIsEmail('');
-                setIsPassword('')
+                setEmail('');
+                setPassword('');
+                props.setIsLoggedIn(true);
                 navigate('/movies', { replace : true })
+            } else if (data === 401) {
+                setSubmitError('Вы ввели неправильный логин или пароль.')
+            } else if (data === 400) {
+                setSubmitError('При авторизации произошла ошибка. Токен не передан или передан не в том формате.')
+            } else {
+                setSubmitError('При авторизации произошла ошибка. Переданный токен некорректен.')
             }
         })
         .catch(err => {
@@ -84,7 +92,8 @@ function Login () {
             path='/signup'
             name='registration-form'
             formValid={formValid}
-            handleSubmit={handleSubmit}>
+            handleSubmit={handleSubmit}
+            submitError={submitError}>
                 <section className="register">
                     <fieldset className="register__fieldset">
                         <label className="register__label" htmlFor='register-email'>

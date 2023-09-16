@@ -9,6 +9,7 @@ import Profile from '../Profile/Profile';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { getToken } from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
 
@@ -32,7 +33,7 @@ function App() {
           })
           setIsLoggedIn(true);
         } else {
-          return
+          return data;
         }
       })
       .catch(err => {
@@ -44,15 +45,17 @@ function App() {
 
   return (
     <div className='app'>
-      <Routes>
-        <Route path='/' element={ <Main isLoggedIn={isLoggedIn} />} />
-        <Route path='*' element={<NotFound />} />
-        <Route path='/signin' element={<Login />} />
-        <Route path='signup' element={<Register />} />
-        <Route path='/profile' element={<Profile isLoggedIn={isLoggedIn} userInfo={userInfo} />} />
-        <Route path='/movies' element={<Movies isLoggedIn={isLoggedIn} />} />
-        <Route path='/saved-movies' element={<SavedMovies isLoggedIn={isLoggedIn} />} />
-      </Routes>
+      <CurrentUserContext.Provider value={userInfo}>
+        <Routes>
+          <Route path='/' element={ <Main isLoggedIn={isLoggedIn} />} />
+          <Route path='*' element={<NotFound />} />
+          <Route path='/signin' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path='signup' element={<Register />} />
+          <Route path='/profile' element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo} />} />
+          <Route path='/movies' element={<Movies isLoggedIn={isLoggedIn} />} />
+          <Route path='/saved-movies' element={<SavedMovies isLoggedIn={isLoggedIn} />} />
+        </Routes>
+      </CurrentUserContext.Provider>
     </div>
   );
 }

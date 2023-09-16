@@ -3,14 +3,14 @@ import './Register.css';
 import FormRegistration from "../FormRegistration/FormRegistration";
 import { validationRegister } from '../../utils/validation';
 import { register } from '../../utils/MainApi';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Register () {
 
     //Создаём переменные, в которые будут записываться значения из полей ввода
-    const [name, setIsName] = React.useState('');
-    const [email, setIsEmail] = React.useState('');
-    const [password, setIsPassword] = React.useState('');
+    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     //Создаём переменную с объектом, в который будет записываться валидность каждого поля ввода
     const [isFormValidity, setIsFormValidity] = React.useState({ nameValid: false, emailValid: false, passwordValid: false });
@@ -22,9 +22,10 @@ function Register () {
     const formValid = nameValidity && emailValidity && passwordValidity;
 
     //Создаём переменные, в которые будет записываться текст ошибки
-    const [nameError, setIsNameError] = React.useState('');
-    const [emailError, setIsEmailError] = React.useState('');
-    const [passwordError, setIsPasswordError] = React.useState('');
+    const [nameError, setNameError] = React.useState('');
+    const [emailError, setEmailError] = React.useState('');
+    const [passwordError, setPasswordError] = React.useState('');
+    const [submitError, setSubmitError] = React.useState('');
 
     //Создаём переменную, которая проверяет состояние фокуса у полей ввода
     const [isFocused, setIsFocused] = React.useState(false);
@@ -34,27 +35,27 @@ function Register () {
 
     //Этот useEffect сбрасывает значения полей форм при обновлении страницы
     React.useEffect(() => {
-        setIsEmail('');
-        setIsPassword('');
-        setIsName('');
+        setEmail('');
+        setPassword('');
+        setName('');
     }, [])
 
     //Этот useEffect запускает функцию валидации
     React.useEffect(() => {
-        validationRegister({name, email, password, setIsEmailError, setIsNameError, setIsPasswordError, setIsFormValidity, isFocused})
+        validationRegister({name, email, password, setEmailError, setNameError, setPasswordError, setIsFormValidity, isFocused})
     }, [name, email, password, setIsFormValidity, setIsFocused])
 
     //Создаём функции, которые будут записывать значения каждого поля ввода в соответствующую переменную
     function handleNameChange (e) {
-        setIsName(e.target.value);
+        setName(e.target.value);
     }
 
     function handleEmailChange (e) {
-        setIsEmail(e.target.value);
+        setEmail(e.target.value);
     }
 
     function handlePasswordChange (e) {
-        setIsPassword(e.target.value);
+        setPassword(e.target.value);
     }
 
     //Функции, меняющие состояние фокуса на полях ввода
@@ -72,9 +73,14 @@ function Register () {
 
         register(name, email, password)
         .then(res => {
-            if(res !== undefined) {
+            if(res.email && res.name) {
                 navigate('/signin', {replace: true})
+            } else if (res === 409) {
+                setSubmitError('Пользователь с таким email уже существует.')
+            } else {
+                setSubmitError('При регистрации пользователя произошла ошибка.')
             }
+
         })
         .catch(err => {
             return `Возникла ошибка: ${err}`
@@ -91,6 +97,7 @@ function Register () {
             name='login-form'
             formValid={formValid}
             handleSubmit={handleSubmit}
+            submitError={submitError}
             >
                 <section className="register">
                     <fieldset className="register__fieldset register__fieldset_margin">
