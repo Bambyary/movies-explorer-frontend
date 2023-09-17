@@ -5,11 +5,15 @@ import { Link } from 'react-router-dom';
 import { editProfile } from '../../utils/MainApi';
 import {validationProfile} from '../../utils/validation';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 function Profile (props) {
 
     const [isClicked, setIsClicked] = React.useState(false);
-    const userInfo = React.useContext(CurrentUserContext);
+    const currentUser = React.useContext(CurrentUserContext);
+
+    //Переменная, отвечающая за открытие/закрытие попапа успешного редактирования
+    const [isSuccess, setIsSuccess] = React.useState(false);
 
     //Создаём переменные, в которые будут записываться значения из полей ввода
     const [name, setName] = React.useState('');
@@ -32,13 +36,13 @@ function Profile (props) {
     const [isFocused, setIsFocused] = React.useState(false);
 
     //Условие для валидности кнопки "Сохранить"
-    const saveButtonValidity = (name !== userInfo.name && email !== userInfo.email) || (name !== userInfo.name && email === userInfo.email) || (name === userInfo.name && email !== userInfo.email);
+    const saveButtonValidity = (name !== currentUser.name && email !== currentUser.email) || (name !== currentUser.name && email === currentUser.email) || (name === currentUser.name && email !== currentUser.email);
 
     //Этот useEffect записывает данные в поля ввода
     React.useEffect(() => {
-        setName(userInfo.name);
-        setEmail(userInfo.email)
-    }, [userInfo])
+        setName(currentUser.name);
+        setEmail(currentUser.email)
+    }, [currentUser])
 
     //Этот useEffect запускает функцию валидации
     React.useEffect(() => {
@@ -63,6 +67,7 @@ function Profile (props) {
     function signOut () {
         props.setIsLoggedIn(false);
         localStorage.removeItem('token');
+        localStorage.removeItem('films');
     }
 
     //Функция, отвечающая за отправку данных на сервер
@@ -73,7 +78,8 @@ function Profile (props) {
         .then(data => {
             if(data.email && data.name) {
                 setIsClicked(false);
-                props.setUserInfo(data);
+                props.setCurrentUser(data);
+                setIsSuccess(true);
             } else if (data === 409) {
                 setSubmitText('Пользователь с таким email уже существует.')
             } else {
@@ -96,14 +102,14 @@ function Profile (props) {
             <Header isLoggedIn={props.isLoggedIn} />
             <main className="profile" id='profile-form'>
                 <section className="profile__section" >
-                    <h1 className="profile__title">{`Привет, ${userInfo.name}`}</h1>
+                    <h1 className="profile__title">{`Привет, ${currentUser.name}`}</h1>
                     <form className="profile__form" name='profile-form' action="#" id='profile-form' onSubmit={handleSubmit} noValidate>
                         <fieldset className="profile__info">
                             <label className="profile__label" htmlFor="name"> Имя
                                 <input className={`profile__input ${isClicked ? 'profile__input_border' : ''}`} 
                                     id='name' 
                                     type="text"
-                                    placeholder={isFocused ? name : userInfo.name}
+                                    placeholder={isFocused ? name : currentUser.name}
                                     minLength='2' maxLength='30'
                                     required
                                     disabled={!isClicked}
@@ -119,7 +125,7 @@ function Profile (props) {
                                 <input  className={`profile__input ${isClicked ? 'profile__input_border' : ''}`} 
                                     id='email' 
                                     type="email"
-                                    placeholder={isFocused ? email : userInfo.email}
+                                    placeholder={isFocused ? email : currentUser.email}
                                     minLength='2' maxLength='30'
                                     required
                                     disabled={!isClicked}
@@ -143,6 +149,7 @@ function Profile (props) {
                         </div>}
                     </form>
                 </section>
+                <InfoTooltip isSuccess={isSuccess} setIsSuccess={setIsSuccess} />
 
             </main>
         </>

@@ -4,7 +4,6 @@ import FormRegistration from "../FormRegistration/FormRegistration";
 import { validationRegister } from '../../utils/validation';
 import { register } from '../../utils/MainApi';
 import { useNavigate } from 'react-router-dom';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Register (props) {
 
@@ -12,7 +11,6 @@ function Register (props) {
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const userInfo = React.useContext(CurrentUserContext);
 
     //Создаём переменную с объектом, в который будет записываться валидность каждого поля ввода
     const [isFormValidity, setIsFormValidity] = React.useState({ nameValid: false, emailValid: false, passwordValid: false });
@@ -40,7 +38,7 @@ function Register (props) {
         setEmail('');
         setPassword('');
         setName('');
-    }, [userInfo])
+    }, [])
 
     //Этот useEffect запускает функцию валидации
     React.useEffect(() => {
@@ -78,7 +76,6 @@ function Register (props) {
             if(data.token) {
                 navigate('/movies', {replace: true});
                 props.setIsLoggedIn(true);
-                props.setUserInfo(data)
             } else if (data === 409) {
                 setSubmitError('Пользователь с таким email уже существует.')
             } else {

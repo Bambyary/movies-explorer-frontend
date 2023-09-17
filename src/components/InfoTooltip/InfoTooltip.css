@@ -1,0 +1,115 @@
+.popup {
+    width: 100vw;
+    min-height: 720px;
+    min-height: 100vh;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.5s, opacity 0.2s linear;
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+    align-items: center;
+}
+
+.popup:last-of-type {
+    background-color: rgba(0, 0, 0, .9);
+}
+
+.popup_opened {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup__container {
+    background-color: #fff;
+    width: 33.6%;
+    max-width: 430px;
+    max-height: 330px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, .15);
+    border-radius: 10px;
+    margin: auto;
+    border: 0;
+    padding: 34px 0 37px;
+    
+    position: relative;
+}
+
+.popup__mark {
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 22px auto 37px;
+    background-image: url(../../images/Ok.svg);
+}
+
+.popup__title {
+    width: 76.7%;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 1.21;
+    padding: 0;
+    margin: 0 auto 11% 8.37%;
+    color: #000;
+    text-align: center;
+    margin: 0 auto 5%;
+}
+
+.popup__button-exit {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    background-color: transparent;
+    background-image: url(../../images/сloseIcon.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+}
+
+.popup__button-exit:hover {
+    opacity: .6;
+}
+
+@media screen and (max-width: 1023px) {
+    .popup__container {
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .popup__container {
+        width: 65%;
+    }
+
+    .popup__title {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .popup__container {
+        width: 88%;
+        max-height: 322px;
+        padding: 25px 0 25px;
+    }
+
+    .popup__title {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    .popup__button-exit {
+        width: 20px;
+        height: 20px;
+        right: 0;
+        top: -35px;
+    }
+}

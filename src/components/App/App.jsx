@@ -10,11 +10,14 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { getToken } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Preloader from '../Preloader/Preloader';
 
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [userInfo, setUserInfo] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [authCheckComplete, setAuthCheckComplete] = React.useState(false);
 
   React.useEffect(() => {
     tokenCheck();
@@ -27,7 +30,7 @@ function App() {
       getToken(token)
       .then(data => {
         if(data) {
-          setUserInfo({
+          setCurrentUser({
             name: data.name,
             email: data.email
           })
@@ -38,26 +41,34 @@ function App() {
       })
       .catch(err => {
         setIsLoggedIn(false);
-        return `Произошла ошибка ${err}`
+        console.log(`Произошла ошибка ${err}`);
       })
+      .finally(() => setAuthCheckComplete(true));
+    } else {
+      setAuthCheckComplete(true);
     }
   }
 
   return (
     <div className='app'>
-      <CurrentUserContext.Provider value={userInfo}>
-        <Routes>
-          <Route path='/' element={ <Main isLoggedIn={isLoggedIn} />} />
-          <Route path='*' element={<NotFound />} />
-          <Route path='/signin' element={<Login setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo} />} />
-          <Route path='signup' element={<Register setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo} />} />
-          <Route path='/profile' element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo} />} />
-          <Route path='/movies' element={<Movies isLoggedIn={isLoggedIn} />} />
-          <Route path='/saved-movies' element={<SavedMovies isLoggedIn={isLoggedIn} />} />
-        </Routes>
-      </CurrentUserContext.Provider>
+      {authCheckComplete ? (
+        <CurrentUserContext.Provider value={currentUser}>
+          <Routes>
+            <Route path='/' element={ <Main isLoggedIn={isLoggedIn} />} />
+            <Route path='*' element={<NotFound />} />
+            <Route path='/signin' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path='signup' element={<Register setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} />} />
+            <Route path='/movies' element={<ProtectedRoute element={Movies} isLoggedIn={isLoggedIn} />} />
+            <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />} />
+          </Routes>
+        </CurrentUserContext.Provider>
+      ) : (
+        <Preloader />
+      )}
     </div>
   );
 }
+
 
 export default App;

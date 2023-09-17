@@ -1,15 +1,27 @@
 import React from "react";
 import './MoviesCardList.css';
 import MoviesCard from "../MoviesCard/MoviesCard";
+import Preloader from '../Preloader/Preloader';
 
-function MoviesCardList () {
+function MoviesCardList ({films, ...props}) {
+
     return (
         <section className="card-list">
-            <ul className="card-list__container">
-                <MoviesCard title='33 слова о дизайне' />
-                <MoviesCard title='Киноальманах «100 лет дизайна»' />
-                <MoviesCard title='В погоне за Бенкси' />
-            </ul>
+        {props.films === {} ?
+        <Preloader />
+        :
+        <ul className="card-list__container">
+            {films.map((film) => {
+                return (
+                    <MoviesCard 
+                        key={film.id} 
+                        title={film.nameRU} 
+                        image={film.image.url} 
+                        duration={film.duration}
+                        trailer={film.trailerLink} />
+                )
+            })}
+        </ul>}
             
         </section>
     )

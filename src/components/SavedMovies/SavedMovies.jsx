@@ -6,12 +6,20 @@ import SearchForm from "../SearchForm/SearchForm";
 import Footer from "../Footer/Footer";
 
 function SavedMovies(props) {
+
+  const films = [];
+
+  function handleSubmit (e) {
+
+    e.preventDefault();
+}
+
     return (
       <>
         <Header isLoggedIn={props.isLoggedIn} />
         <main className="main main_margin">
-          <SearchForm />
-          <MoviesCardList />
+          <SearchForm id='search-form-saved-movies' handleSubmit={handleSubmit} />
+          <MoviesCardList films={films} />
         </main>
         <Footer />
       </>

@@ -22,7 +22,6 @@ export function register (name, email, password) {
     })
     .then(data => {
         if(data.token) {
-            console.log(data.token)
             localStorage.setItem('token', data.token);
             return data;
         } else {
