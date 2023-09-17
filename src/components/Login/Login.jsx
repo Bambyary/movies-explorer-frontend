@@ -32,7 +32,6 @@ function Login (props) {
 
     //Этот useEffect сбрасывает значения полей форм при обновлении страницы
     React.useEffect(() => {
-        setEmail('');
         setPassword('');
     }, [])
 
@@ -66,8 +65,6 @@ function Login (props) {
         authorize(email, password)
         .then(data => {
             if(data.token) {
-                setEmail('');
-                setPassword('');
                 props.setIsLoggedIn(true);
                 navigate('/movies', { replace : true })
             } else if (data === 401) {

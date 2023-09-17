@@ -49,8 +49,8 @@ function App() {
         <Routes>
           <Route path='/' element={ <Main isLoggedIn={isLoggedIn} />} />
           <Route path='*' element={<NotFound />} />
-          <Route path='/signin' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path='signup' element={<Register />} />
+          <Route path='/signin' element={<Login setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo} />} />
+          <Route path='signup' element={<Register setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo} />} />
           <Route path='/profile' element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo} />} />
           <Route path='/movies' element={<Movies isLoggedIn={isLoggedIn} />} />
           <Route path='/saved-movies' element={<SavedMovies isLoggedIn={isLoggedIn} />} />

@@ -20,7 +20,15 @@ export function register (name, email, password) {
             return res.status;
         }
     })
-    .then(res => res)
+    .then(data => {
+        if(data.token) {
+            console.log(data.token)
+            localStorage.setItem('token', data.token);
+            return data;
+        } else {
+            return data;
+        }
+    })
 }
 
 export function authorize ( email, password ) {
@@ -85,5 +93,5 @@ export function editProfile (name, email) {
             return res.status;
         }
     })
-    .then(data => data);
+    .then(data => data)
 }

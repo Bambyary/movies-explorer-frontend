@@ -4,13 +4,15 @@ import FormRegistration from "../FormRegistration/FormRegistration";
 import { validationRegister } from '../../utils/validation';
 import { register } from '../../utils/MainApi';
 import { useNavigate } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Register () {
+function Register (props) {
 
     //Создаём переменные, в которые будут записываться значения из полей ввода
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const userInfo = React.useContext(CurrentUserContext);
 
     //Создаём переменную с объектом, в который будет записываться валидность каждого поля ввода
     const [isFormValidity, setIsFormValidity] = React.useState({ nameValid: false, emailValid: false, passwordValid: false });
@@ -38,7 +40,7 @@ function Register () {
         setEmail('');
         setPassword('');
         setName('');
-    }, [])
+    }, [userInfo])
 
     //Этот useEffect запускает функцию валидации
     React.useEffect(() => {
@@ -72,10 +74,12 @@ function Register () {
         e.preventDefault();
 
         register(name, email, password)
-        .then(res => {
-            if(res.email && res.name) {
-                navigate('/signin', {replace: true})
-            } else if (res === 409) {
+        .then(data => {
+            if(data.token) {
+                navigate('/movies', {replace: true});
+                props.setIsLoggedIn(true);
+                props.setUserInfo(data)
+            } else if (data === 409) {
                 setSubmitError('Пользователь с таким email уже существует.')
             } else {
                 setSubmitError('При регистрации пользователя произошла ошибка.')
