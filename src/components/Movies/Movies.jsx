@@ -9,10 +9,12 @@ import { getMovies } from "../../utils/MoviesApi";
 function Movies (props) {
 
     const [films, setFilms] = React.useState([]);
-    const [keyWord, setKeyWord] = React.useState('');
-    const [filteredFilms, setFilteredFilms] = React.useState([]);
-    const savedFilms = localStorage.getItem('filteredFilms');
     const savedKeyWords = localStorage.getItem('textSearch');
+    const [keyWord, setKeyWord] = React.useState(savedKeyWords || '');
+    const savedFilms = localStorage.getItem('filteredFilms');
+    const [filteredFilms, setFilteredFilms] = React.useState(JSON.parse(savedFilms) || []);
+    const [filmsToShow, setFilmsToShow] = React.useState(0);
+    const [isChecked, setIsChecked] = React.useState(false);
 
     //Этот useEffect подтягивает данные с сервера один раз при авторизации пользователя
     React.useEffect(() => {
@@ -26,26 +28,55 @@ function Movies (props) {
                 }
             })
             .catch(err => console.log(`Возникла ошибка ${err}`));
+
+            setFilmsToShow(getFilmsToShow());
         }
     }, [films])
 
-    //При изменении savedFilms или savedKeyWords происходит обновление filteredFilms и keyWord
+    //useEffect записывает в переменную состояние чекбокса
     React.useEffect(() => {
-        setFilteredFilms(JSON.parse(savedFilms));
-        setKeyWord(savedKeyWords || '');
-    }, [savedFilms, savedKeyWords])
+        if(localStorage.getItem('checked') === 'true') {
+            setIsChecked(true);
+        } else {
+            setIsChecked(false);
+        }
+    }, [isChecked])
 
     //При клике на кнопку поиска происходит фильтрация фильмов и сохранение в localStorage
     function handleSubmit (e) {
         e.preventDefault();
 
         const filter = films.filter(film => {
-            return film.nameRU.toLowerCase().includes(keyWord.toLowerCase());
-        });
+            if(!isChecked) {
+                return film.nameRU.toLowerCase().includes(keyWord.toLowerCase());
+            } else {
+                if(film.duration <= 40 && film.nameRU.toLowerCase().includes(keyWord.toLowerCase())) {
+                    return film;
+                }
+            }
+        })
 
         localStorage.setItem('filteredFilms', JSON.stringify(filter));
         localStorage.setItem('textSearch', keyWord);
         setFilteredFilms(filter);
+        setFilmsToShow(getFilmsToShow());
+    }
+
+    //Функция, определяющая сколько карточек отобразить
+    function getFilmsToShow () {
+        return window.innerWidth >= 550 ? 12 : 5;
+    }
+
+    //Функция, которая добавляет поределённое количество фильмов к найденным фильмам
+    function handleMoreFilms () {
+        const newFilmsToShow = window.innerWidth >= 550 ? filmsToShow + 3 : filmsToShow + 2;
+        setFilmsToShow(newFilmsToShow);
+    }
+
+    //Функция для чекбокса 
+    function handleCheckbox () {
+        setIsChecked(!isChecked)
+        localStorage.setItem('checked', !isChecked);
     }
 
 
@@ -53,11 +84,19 @@ function Movies (props) {
         <>
             <Header isLoggedIn={props.isLoggedIn} />
             <main className="main">
-                <SearchForm id='search-form-movies' handleSubmit={handleSubmit} keyWord={keyWord} setKeyWord={setKeyWord} />
-                <MoviesCardList films={filteredFilms} />
-                <section className="main__button-container">
-                    <button className="main__button" type="button">Ещё</button>
-                </section>
+                <SearchForm id='search-form-movies' 
+                    handleSubmit={handleSubmit} 
+                    keyWord={keyWord} 
+                    setKeyWord={setKeyWord}
+                    handleCheckbox={handleCheckbox}
+                    isChecked={isChecked}
+                     />
+                <MoviesCardList films={filteredFilms.slice(0, filmsToShow)} />
+                {filteredFilms.length > filmsToShow &&
+                    <section className="main__button-container">
+                        <button onClick={handleMoreFilms} className="main__button" type="button">Ещё</button>
+                    </section>
+                }
             </main>
             <Footer />
         </>
