@@ -5,6 +5,7 @@ import Footer from "../Footer/Footer";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import '../Main/Main.css';
 import { getMovies } from "../../utils/MoviesApi";
+import FilmError from "../FilmError/FilmError";
 
 function Movies (props) {
 
@@ -14,11 +15,13 @@ function Movies (props) {
     const savedFilms = localStorage.getItem('filteredFilms');
     const [filteredFilms, setFilteredFilms] = React.useState(JSON.parse(savedFilms) || []);
     const [filmsToShow, setFilmsToShow] = React.useState(0);
-    const [isChecked, setIsChecked] = React.useState(false);
+    const [errorText, setErrorText] = React.useState('');
+    const [isLoading, setIsLoading] = React.useState(false);
 
     //Этот useEffect подтягивает данные с сервера один раз при авторизации пользователя
     React.useEffect(() => {
         if(films.length === 0) {
+            setIsLoading(true);
             getMovies()
             .then(data => {
                 if(data) {
@@ -27,7 +30,13 @@ function Movies (props) {
                     setFilms(JSON.parse(storedFilms))
                 }
             })
-            .catch(err => console.log(`Возникла ошибка ${err}`));
+            .catch(err => {
+                console.log(`Возникла ошибка ${err}`)
+                setErrorText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+            })
+            .finally(() => {
+                setIsLoading(false);  
+            });
 
             setFilmsToShow(getFilmsToShow());
         }
@@ -36,18 +45,18 @@ function Movies (props) {
     //useEffect записывает в переменную состояние чекбокса
     React.useEffect(() => {
         if(localStorage.getItem('checked') === 'true') {
-            setIsChecked(true);
+            props.setIsChecked(true);
         } else {
-            setIsChecked(false);
+            props.setIsChecked(false);
         }
-    }, [isChecked])
+    }, [props.isChecked])
 
     //При клике на кнопку поиска происходит фильтрация фильмов и сохранение в localStorage
     function handleSubmit (e) {
         e.preventDefault();
 
         const filter = films.filter(film => {
-            if(!isChecked) {
+            if(!props.isChecked) {
                 return film.nameRU.toLowerCase().includes(keyWord.toLowerCase());
             } else {
                 if(film.duration <= 40 && film.nameRU.toLowerCase().includes(keyWord.toLowerCase())) {
@@ -55,6 +64,10 @@ function Movies (props) {
                 }
             }
         })
+
+        if(filter.length === 0) {
+            setErrorText('Ничего не найдено');
+        }
 
         localStorage.setItem('filteredFilms', JSON.stringify(filter));
         localStorage.setItem('textSearch', keyWord);
@@ -73,13 +86,6 @@ function Movies (props) {
         setFilmsToShow(newFilmsToShow);
     }
 
-    //Функция для чекбокса 
-    function handleCheckbox () {
-        setIsChecked(!isChecked)
-        localStorage.setItem('checked', !isChecked);
-    }
-
-
     return (
         <>
             <Header isLoggedIn={props.isLoggedIn} />
@@ -88,10 +94,15 @@ function Movies (props) {
                     handleSubmit={handleSubmit} 
                     keyWord={keyWord} 
                     setKeyWord={setKeyWord}
-                    handleCheckbox={handleCheckbox}
-                    isChecked={isChecked}
+                    handleCheckbox={props.handleCheckbox}
+                    isChecked={props.isChecked}
                      />
-                <MoviesCardList films={filteredFilms.slice(0, filmsToShow)} />
+
+                {filteredFilms.length !== 0 ? 
+                    <MoviesCardList isLoading={isLoading} films={filteredFilms.slice(0, filmsToShow)} />
+                 :
+                    <FilmError keyWord={keyWord} errorText={errorText} />}
+
                 {filteredFilms.length > filmsToShow &&
                     <section className="main__button-container">
                         <button onClick={handleMoreFilms} className="main__button" type="button">Ещё</button>

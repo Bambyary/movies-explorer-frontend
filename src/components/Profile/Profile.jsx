@@ -68,6 +68,9 @@ function Profile (props) {
         props.setIsLoggedIn(false);
         localStorage.removeItem('token');
         localStorage.removeItem('films');
+        localStorage.removeItem('textSearch');
+        localStorage.removeItem('filteredFilms');
+        localStorage.removeItem('checked');
     }
 
     //Функция, отвечающая за отправку данных на сервер

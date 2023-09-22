@@ -1,5 +1,6 @@
 const BASE_URL = 'http://127.0.0.1:3000';
 
+//Запрос к серверу на регистрацию
 export function register (name, email, password) {
     return fetch(`${BASE_URL}/signup`, {
         method: 'POST',
@@ -30,6 +31,7 @@ export function register (name, email, password) {
     })
 }
 
+//Запрос к серверу на авторизацию
 export function authorize ( email, password ) {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
@@ -56,6 +58,7 @@ export function authorize ( email, password ) {
     })
 }
 
+//Запрос к серверу за токеном
 export function getToken (token) {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
@@ -75,6 +78,7 @@ export function getToken (token) {
     .then(data => data)
 }
 
+//Запрос к серверу для изменения данных
 export function editProfile (name, email) {
     return fetch(`${BASE_URL}/users/me`, {
         method: 'PATCH',
@@ -93,4 +97,38 @@ export function editProfile (name, email) {
         }
     })
     .then(data => data)
+}
+
+//Запрос к серверу на создание фильма
+export function createFilm (data) {
+    console.log(data)
+ return fetch(`${BASE_URL}/movies`, {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify({
+        country: data.country, 
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: 'https://api.nomoreparties.co' + data.image,
+        trailerLink: data.trailerLink,
+        thumbnail: 'https://api.nomoreparties.co' + data.image,
+        owner: data.currentUser,
+        movieId: data.id,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN})
+ })
+ .then(res => {
+    if(res.ok) {
+        return res.json();
+    } else {
+        return res.status;
+    }
+ })
+ .then(data => data);
 }

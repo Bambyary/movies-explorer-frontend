@@ -7,7 +7,7 @@ function MoviesCardList ({films, ...props}) {
 
     return (
         <section className="card-list">
-        {props.films === {} ?
+        {props.isLoading ?
         <Preloader />
         :
         <ul className="card-list__container">
@@ -18,7 +18,16 @@ function MoviesCardList ({films, ...props}) {
                         title={film.nameRU} 
                         image={film.image.url} 
                         duration={film.duration}
-                        trailer={film.trailerLink} />
+                        trailer={film.trailerLink}
+                        id={film.id}
+                        country={film.country}
+                        create={film.created_at}
+                        desctiption={film.description}
+                        director={film.director}
+                        nameRU={film.nameRU}
+                        nameEN={film.nameEN}
+                        update={film.updated_at}
+                        year={film.year} />
                 )
             })}
         </ul>}

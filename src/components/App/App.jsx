@@ -18,6 +18,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [authCheckComplete, setAuthCheckComplete] = React.useState(false);
+  const [isChecked, setIsChecked] = React.useState(false);
 
   React.useEffect(() => {
     tokenCheck();
@@ -32,7 +33,8 @@ function App() {
         if(data) {
           setCurrentUser({
             name: data.name,
-            email: data.email
+            email: data.email,
+            id: data._id,
           })
           setIsLoggedIn(true);
         } else {
@@ -49,6 +51,13 @@ function App() {
     }
   }
 
+  //Функция для чекбокса 
+  function handleCheckbox () {
+    setIsChecked(!isChecked)
+    localStorage.setItem('checked', !isChecked);
+}
+
+
   return (
     <div className='app'>
       {authCheckComplete ? (
@@ -59,8 +68,16 @@ function App() {
             <Route path='/signin' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
             <Route path='signup' element={<Register setIsLoggedIn={setIsLoggedIn} />} />
             <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} />} />
-            <Route path='/movies' element={<ProtectedRoute element={Movies} isLoggedIn={isLoggedIn} />} />
-            <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />} />
+            <Route path='/movies' element={<ProtectedRoute element={Movies} 
+              isLoggedIn={isLoggedIn}
+              isChecked={isChecked}
+              handleCheckbox={handleCheckbox}
+              setIsChecked={setIsChecked} />} />
+            <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} 
+              isLoggedIn={isLoggedIn}
+              isChecked={isChecked}
+              handleCheckbox={handleCheckbox}
+              setIsChecked={setIsChecked} />} />
           </Routes>
         </CurrentUserContext.Provider>
       ) : (

@@ -1,5 +1,6 @@
 .card {
     width: 100%;
+    max-width: 339px;
     position: relative;
     list-style-type: none;
     margin: 0 auto;
