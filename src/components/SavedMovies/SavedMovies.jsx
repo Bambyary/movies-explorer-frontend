@@ -7,8 +7,6 @@ import Footer from "../Footer/Footer";
 
 function SavedMovies(props) {
 
-  const films = [];
-
   function handleSubmit (e) {
 
     e.preventDefault();
@@ -19,7 +17,7 @@ function SavedMovies(props) {
         <Header isLoggedIn={props.isLoggedIn} />
         <main className="main main_margin">
           <SearchForm id='search-form-saved-movies' handleSubmit={handleSubmit} />
-          <MoviesCardList films={films} />
+          <MoviesCardList isSavedFilms={true} films={props.savedFilms} onClickDelete={props.onClickDelete} savedFilms={props.savedFilms} />
         </main>
         <Footer />
       </>

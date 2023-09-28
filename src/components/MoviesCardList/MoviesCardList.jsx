@@ -5,31 +5,31 @@ import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList ({films, ...props}) {
 
+    // Функция сравнивает id сохранённого фильма с id фильма на странице
+    function compareFilm (savedFilms, film) {
+        return savedFilms.find(item => item.movieId === film.id);
+    }
+    
     return (
         <section className="card-list">
         {props.isLoading ?
         <Preloader />
         :
         <ul className="card-list__container">
-            {films.map((film) => {
+            {films.length > 0 && 
+            films.map((film) => {
                 return (
                     <MoviesCard 
-                        key={film.id} 
-                        title={film.nameRU} 
-                        image={film.image.url} 
-                        duration={film.duration}
-                        trailer={film.trailerLink}
-                        id={film.id}
-                        country={film.country}
-                        create={film.created_at}
-                        desctiption={film.description}
-                        director={film.director}
-                        nameRU={film.nameRU}
-                        nameEN={film.nameEN}
-                        update={film.updated_at}
-                        year={film.year} />
+                        key={props.isSavedFilms ? film._id : film.id} 
+                        filmData={film}
+                        onClickSave={props.onClickSave}
+                        onClickDelete={props.onClickDelete}
+                        isSavedFilms={props.isSavedFilms}
+                        savedFilms={props.savedFilms}
+                        isSaved={compareFilm(props.savedFilms, film)} />
                 )
-            })}
+            })
+            }
         </ul>}
             
         </section>

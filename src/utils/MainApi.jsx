@@ -115,13 +115,13 @@ export function createFilm (data) {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: 'https://api.nomoreparties.co' + data.image,
+        image: 'https://api.nomoreparties.co' + data.image.url,
         trailerLink: data.trailerLink,
-        thumbnail: 'https://api.nomoreparties.co' + data.image,
-        owner: data.currentUser,
+        thumbnail: 'https://api.nomoreparties.co' + data.image.url,
         movieId: data.id,
         nameRU: data.nameRU,
-        nameEN: data.nameEN})
+        nameEN: data.nameEN
+    })
  })
  .then(res => {
     if(res.ok) {
@@ -131,4 +131,42 @@ export function createFilm (data) {
     }
  })
  .then(data => data);
+}
+
+//Запрос к серверу на получение карточек с фильмами
+export function getFilms () {
+    return fetch(`${BASE_URL}/movies`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+    .then(res => {
+        if(res.ok) {
+            return res.json()
+        } else {
+            return res.status;
+        }
+    })
+    .then(data => data)
+}
+
+export function deleteFilm (movieID) {
+    return fetch(`${BASE_URL}/movies/${movieID}`, {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+    .then(res => {
+        if(res.ok) {
+            return res.json()
+        } else {
+            return res.status;
+        }
+    })
 }

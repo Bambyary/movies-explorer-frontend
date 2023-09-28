@@ -4,58 +4,20 @@ import SearchForm from "../SearchForm/SearchForm";
 import Footer from "../Footer/Footer";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import '../Main/Main.css';
-import { getMovies } from "../../utils/MoviesApi";
 import FilmError from "../FilmError/FilmError";
 
 function Movies (props) {
 
-    const [films, setFilms] = React.useState([]);
     const savedKeyWords = localStorage.getItem('textSearch');
     const [keyWord, setKeyWord] = React.useState(savedKeyWords || '');
     const savedFilms = localStorage.getItem('filteredFilms');
     const [filteredFilms, setFilteredFilms] = React.useState(JSON.parse(savedFilms) || []);
-    const [filmsToShow, setFilmsToShow] = React.useState(0);
-    const [errorText, setErrorText] = React.useState('');
-    const [isLoading, setIsLoading] = React.useState(false);
-
-    //Этот useEffect подтягивает данные с сервера один раз при авторизации пользователя
-    React.useEffect(() => {
-        if(films.length === 0) {
-            setIsLoading(true);
-            getMovies()
-            .then(data => {
-                if(data) {
-                    localStorage.setItem('films', JSON.stringify(data));
-                    const storedFilms = localStorage.getItem('films');
-                    setFilms(JSON.parse(storedFilms))
-                }
-            })
-            .catch(err => {
-                console.log(`Возникла ошибка ${err}`)
-                setErrorText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
-            })
-            .finally(() => {
-                setIsLoading(false);  
-            });
-
-            setFilmsToShow(getFilmsToShow());
-        }
-    }, [films])
-
-    //useEffect записывает в переменную состояние чекбокса
-    React.useEffect(() => {
-        if(localStorage.getItem('checked') === 'true') {
-            props.setIsChecked(true);
-        } else {
-            props.setIsChecked(false);
-        }
-    }, [props.isChecked])
 
     //При клике на кнопку поиска происходит фильтрация фильмов и сохранение в localStorage
     function handleSubmit (e) {
         e.preventDefault();
 
-        const filter = films.filter(film => {
+        const filter = props.films.filter(film => {
             if(!props.isChecked) {
                 return film.nameRU.toLowerCase().includes(keyWord.toLowerCase());
             } else {
@@ -66,24 +28,19 @@ function Movies (props) {
         })
 
         if(filter.length === 0) {
-            setErrorText('Ничего не найдено');
+            props.setErrorText('Ничего не найдено');
         }
 
         localStorage.setItem('filteredFilms', JSON.stringify(filter));
         localStorage.setItem('textSearch', keyWord);
         setFilteredFilms(filter);
-        setFilmsToShow(getFilmsToShow());
+        props.setFilmsToShow(props.getFilmsToShow());
     }
 
-    //Функция, определяющая сколько карточек отобразить
-    function getFilmsToShow () {
-        return window.innerWidth >= 550 ? 12 : 5;
-    }
-
-    //Функция, которая добавляет поределённое количество фильмов к найденным фильмам
+    //Функция, которая добавляет определённое количество фильмов к найденным фильмам
     function handleMoreFilms () {
-        const newFilmsToShow = window.innerWidth >= 550 ? filmsToShow + 3 : filmsToShow + 2;
-        setFilmsToShow(newFilmsToShow);
+        const newFilmsToShow = window.innerWidth >= 550 ? props.filmsToShow + 3 : props.filmsToShow + 2;
+        props.setFilmsToShow(newFilmsToShow);
     }
 
     return (
@@ -98,12 +55,17 @@ function Movies (props) {
                     isChecked={props.isChecked}
                      />
 
-                {filteredFilms.length !== 0 ? 
-                    <MoviesCardList isLoading={isLoading} films={filteredFilms.slice(0, filmsToShow)} />
+                {filteredFilms.length > 0 ? 
+                    <MoviesCardList 
+                        isLoading={props.isLoading} 
+                        films={filteredFilms.slice(0, props.filmsToShow)} 
+                        onClickSave={props.onClickSave}
+                        onClickDelete={props.onClickDelete}
+                        savedFilms={props.savedFilms} />
                  :
-                    <FilmError keyWord={keyWord} errorText={errorText} />}
+                    <FilmError keyWord={keyWord} errorText={props.errorText} />}
 
-                {filteredFilms.length > filmsToShow &&
+                {filteredFilms.length > props.filmsToShow &&
                     <section className="main__button-container">
                         <button onClick={handleMoreFilms} className="main__button" type="button">Ещё</button>
                     </section>
