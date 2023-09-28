@@ -111,7 +111,6 @@ function clickAddFilm (data) {
 
 //Функция удаления карточки
 function clickDeleteFilm (data) {
-  console.log(data)
   deleteFilm(data._id)
       .then(data => {
         setSavedFilms(state => state.filter(item => item._id !== data._id))
