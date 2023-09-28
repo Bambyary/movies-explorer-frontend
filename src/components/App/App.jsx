@@ -92,13 +92,13 @@ React.useEffect(() => {
 }, [isLoggedIn])
 
 //useEffect записывает в переменную состояние чекбокса
-React.useEffect(() => {
-  if(localStorage.getItem('checked') === 'true') {
-      setIsChecked(true);
-  } else {
-      setIsChecked(false);
-  }
-}, [isChecked])
+// React.useEffect(() => {
+//   if(localStorage.getItem('checked') === 'true') {
+//       setIsChecked(true);
+//   } else {
+//       setIsChecked(false);
+//   }
+// }, [isChecked])
 
 //POST-запрос на сервер для добавления карточки с фильмом
 function clickAddFilm (data) {
@@ -116,12 +116,6 @@ function clickDeleteFilm (data) {
         setSavedFilms(state => state.filter(item => item._id !== data._id))
       })
       .catch(err => console.log(`Возникла ошибка ${err}`))
-}
-
-  //Функция для чекбокса 
-  function handleCheckbox () {
-    setIsChecked(!isChecked)
-    localStorage.setItem('checked', !isChecked);
 }
 
 //Функция, определяющая сколько карточек отобразить
@@ -143,7 +137,6 @@ function getFilmsToShow () {
             <Route path='/movies' element={<ProtectedRoute element={Movies} 
               isLoggedIn={isLoggedIn}
               isChecked={isChecked}
-              handleCheckbox={handleCheckbox}
               setIsChecked={setIsChecked}
               films={films}
               setErrorText={setErrorText}
@@ -158,10 +151,11 @@ function getFilmsToShow () {
             <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} 
               isLoggedIn={isLoggedIn}
               isChecked={isChecked}
-              handleCheckbox={handleCheckbox}
               setIsChecked={setIsChecked}
               savedFilms={savedFilms}
-              onClickDelete={clickDeleteFilm} />} />
+              onClickDelete={clickDeleteFilm}
+              setErrorText={setErrorText}
+              errorText={errorText} />} />
           </Routes>
         </CurrentUserContext.Provider>
       )}

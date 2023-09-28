@@ -101,7 +101,6 @@ export function editProfile (name, email) {
 
 //Запрос к серверу на создание фильма
 export function createFilm (data) {
-    console.log(data)
  return fetch(`${BASE_URL}/movies`, {
     method: 'POST',
     headers: {

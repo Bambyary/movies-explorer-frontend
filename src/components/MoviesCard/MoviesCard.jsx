@@ -28,7 +28,9 @@ function MoviesCard (props) {
 
     return (
         <li className="card">
-            <a className="card__link" href={props.trailer} target='_blank' ><img className="card__img" src={props.isSavedFilms ? props.filmData.image : `https://api.nomoreparties.co/${props.filmData.image.url}`} alt={props.title} /></a>
+            <a className="card__link" href={props.trailer} target='_blank' >
+                <img className="card__img" src={props.isSavedFilms ? props.filmData.image : `https://api.nomoreparties.co/${props.filmData.image.url}`} alt={props.title} />
+            </a>
 
             {props.isSaved ?
                 (location.pathname === '/movies' && <button className="card__button-save" type="button" onClick={handleClickSave} ><img className="card__img-save" src={save} alt="Фильм сохранён" /></button>)

@@ -8,24 +8,24 @@ import FilmError from "../FilmError/FilmError";
 
 function Movies (props) {
 
-    const savedKeyWords = localStorage.getItem('textSearch');
-    const [keyWord, setKeyWord] = React.useState(savedKeyWords || '');
-    const savedFilms = localStorage.getItem('filteredFilms');
-    const [filteredFilms, setFilteredFilms] = React.useState(JSON.parse(savedFilms) || []);
+    const [keyWord, setKeyWord] = React.useState(localStorage.getItem('textSearch') || '');
+    const savedFilmsStorage = localStorage.getItem('filteredFilms');
+    const [filteredFilms, setFilteredFilms] = React.useState(JSON.parse(savedFilmsStorage) || []);
+
+    //useEffect записывает в переменную состояние чекбокса
+    React.useEffect(() => {
+        if(localStorage.getItem('checked') === 'true') {
+            props.setIsChecked(true);
+        } else {
+            props.setIsChecked(false);
+        }
+    }, [props.isChecked])
 
     //При клике на кнопку поиска происходит фильтрация фильмов и сохранение в localStorage
     function handleSubmit (e) {
         e.preventDefault();
 
-        const filter = props.films.filter(film => {
-            if(!props.isChecked) {
-                return film.nameRU.toLowerCase().includes(keyWord.toLowerCase());
-            } else {
-                if(film.duration <= 40 && film.nameRU.toLowerCase().includes(keyWord.toLowerCase())) {
-                    return film;
-                }
-            }
-        })
+        const filter = props.films.filter(film => film.nameRU.toLowerCase().includes(keyWord.toLowerCase()))
 
         if(filter.length === 0) {
             props.setErrorText('Ничего не найдено');
@@ -34,7 +34,34 @@ function Movies (props) {
         localStorage.setItem('filteredFilms', JSON.stringify(filter));
         localStorage.setItem('textSearch', keyWord);
         setFilteredFilms(filter);
+
         props.setFilmsToShow(props.getFilmsToShow());
+    }
+
+    //Функция для чекбокса 
+    function handleCheckbox () {
+        props.setIsChecked(!props.isChecked)
+        localStorage.setItem('checked', !props.isChecked);
+
+        if(props.isChecked) {
+            return setFilteredFilms(() => {
+                const filter = props.films.filter( film => {
+                    return film.nameRU.toLowerCase().includes(keyWord.toLowerCase());;
+                })
+                localStorage.setItem('filteredFilms', JSON.stringify(filter));
+                return filter;
+            })
+        } else {
+            return setFilteredFilms(() => {
+                const filter = props.films.filter( film => {
+                    if(film.duration <= 40 && film.nameRU.toLowerCase().includes(keyWord.toLowerCase())) {
+                        return film;
+                    }
+                })
+                localStorage.setItem('filteredFilms', JSON.stringify(filter));
+                return filter;
+            })
+        }
     }
 
     //Функция, которая добавляет определённое количество фильмов к найденным фильмам
@@ -51,7 +78,7 @@ function Movies (props) {
                     handleSubmit={handleSubmit} 
                     keyWord={keyWord} 
                     setKeyWord={setKeyWord}
-                    handleCheckbox={props.handleCheckbox}
+                    handleCheckbox={handleCheckbox}
                     isChecked={props.isChecked}
                      />
 
