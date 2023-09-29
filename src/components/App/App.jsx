@@ -113,11 +113,11 @@ function clickDeleteFilm (data) {
 //Функция, определяющая сколько карточек отобразить
 function getFilmsToShow () {
 
-  if(window.innerWidth >= 800) {
+  if(window.innerWidth >= 1000) {
     return 12;
   }
 
-  if(window.innerWidth < 800 && window.innerWidth > 550) {
+  if(window.innerWidth < 1000 && window.innerWidth > 550) {
     return 8;
   }
 

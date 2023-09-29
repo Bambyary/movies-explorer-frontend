@@ -68,7 +68,7 @@ function Movies (props) {
 
     //Функция, которая добавляет определённое количество фильмов к найденным фильмам
     function handleMoreFilms () {
-        const newFilmsToShow = window.innerWidth >= 800 ? props.filmsToShow + 3 : props.filmsToShow + 2;
+        const newFilmsToShow = window.innerWidth >= 1000 ? props.filmsToShow + 3 : props.filmsToShow + 2;
         props.setFilmsToShow(newFilmsToShow);
     }
 
