@@ -26,10 +26,6 @@ function App() {
   const [filmsToShow, setFilmsToShow] = React.useState(0); // Стейт отвечает за количество фильмов на странице
   const [savedFilms, setSavedFilms] = React.useState([]); //Сохраняем фильмы для страницы "Сохранённые фильмы"
 
-  React.useEffect(() => {
-    tokenCheck();
-  }, [isLoggedIn])
-
   //Функция, которая пробрасывает токен на сервер для авторизации пользователя
   function tokenCheck () {
     if(localStorage.getItem('token')) {
@@ -57,8 +53,11 @@ function App() {
     }
   }
 
-  //Этот useEffect подтягивает данные с сервера один раз при авторизации пользователя
   React.useEffect(() => {
+
+    //Запускаем функцию с токеном
+    tokenCheck();
+
     if(films.length === 0) {
         setIsLoading(true);
 
@@ -78,27 +77,20 @@ function App() {
         .finally(() => {
             setIsLoading(false);  
         });
-
-        setFilmsToShow(getFilmsToShow());
     }
-}, [isLoggedIn])
 
-//GET-запрос на получаение фильмов со своего апи
-React.useEffect(() => {
-  getFilms()
-  .then(data => {
-    setSavedFilms(data);
-  })
-}, [isLoggedIn])
+    //GET-запрос на получаение фильмов со своего апи
+    if (isLoggedIn) {
+      getFilms()
+      .then(data => {
+        setSavedFilms(data);
+      })
+      .catch(err => console.log(`Возникла ошибка ${err}`))
+    }
 
-//useEffect записывает в переменную состояние чекбокса
-// React.useEffect(() => {
-//   if(localStorage.getItem('checked') === 'true') {
-//       setIsChecked(true);
-//   } else {
-//       setIsChecked(false);
-//   }
-// }, [isChecked])
+    setFilmsToShow(getFilmsToShow());
+
+}, [isLoggedIn])
 
 //POST-запрос на сервер для добавления карточки с фильмом
 function clickAddFilm (data) {
@@ -133,7 +125,7 @@ function getFilmsToShow () {
             <Route path='*' element={<NotFound />} />
             <Route path='/signin' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
             <Route path='signup' element={<Register setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} />} />
+            <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} setSavedFilms={setSavedFilms} />} />
             <Route path='/movies' element={<ProtectedRoute element={Movies} 
               isLoggedIn={isLoggedIn}
               isChecked={isChecked}

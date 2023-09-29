@@ -9,8 +9,8 @@ import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 function Profile (props) {
 
-    const [isClicked, setIsClicked] = React.useState(false);
-    const currentUser = React.useContext(CurrentUserContext);
+    const [isClicked, setIsClicked] = React.useState(false); // Переменная для переключения "редактировать" и "сохранить"
+    const currentUser = React.useContext(CurrentUserContext); // Достаём данные пользователя из контекста
 
     //Переменная, отвечающая за открытие/закрытие попапа успешного редактирования
     const [isSuccess, setIsSuccess] = React.useState(false);
@@ -66,11 +66,13 @@ function Profile (props) {
     //Функция отвечает за выход из аккаунта
     function signOut () {
         props.setIsLoggedIn(false);
+        props.setSavedFilms([]);
         localStorage.removeItem('token');
         localStorage.removeItem('films');
         localStorage.removeItem('textSearch');
         localStorage.removeItem('filteredFilms');
         localStorage.removeItem('checked');
+        localStorage.removeItem('checkedSave');
     }
 
     //Функция, отвечающая за отправку данных на сервер

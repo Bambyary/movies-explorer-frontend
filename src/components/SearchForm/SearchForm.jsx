@@ -5,17 +5,19 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 function SearchForm (props) {
 
-    const [isFocused, setIsFocused] = React.useState(false);
+    const [isFocused, setIsFocused] = React.useState(false); //Стейт переменная, меняющая значение фокуса
 
     //Создаём функцию, которая будет записывать значение поля ввода в соответствующую переменную
     function handleChange (e) {
         props.setKeyWord(e.target.value);
     }
 
+    //Функция, отвечающая за состояние фокуса
     function handleFocus () {
         setIsFocused(true);
     }
 
+    //Функция, отвечающая за состояние вне фокуса
     function handleBlur () {
         setIsFocused(false);
     }

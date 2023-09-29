@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom';
 
 function MoviesCard (props) {
 
-    const hours = Math.floor(props.filmData.duration / 60);
-    const minutes = props.filmData.duration % 60;
+    const hours = Math.floor(props.filmData.duration / 60); // Выводим количество часов
+    const minutes = props.filmData.duration % 60; // Выводим количество минут
 
     const location = useLocation();
 
@@ -28,7 +28,7 @@ function MoviesCard (props) {
 
     return (
         <li className="card">
-            <a className="card__link" href={props.trailer} target='_blank' >
+            <a className="card__link" href={props.filmData.trailerLink} target='_blank' >
                 <img className="card__img" src={props.isSavedFilms ? props.filmData.image : `https://api.nomoreparties.co/${props.filmData.image.url}`} alt={props.title} />
             </a>
 

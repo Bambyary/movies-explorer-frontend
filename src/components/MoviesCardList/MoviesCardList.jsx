@@ -26,7 +26,8 @@ function MoviesCardList ({films, ...props}) {
                         onClickDelete={props.onClickDelete}
                         isSavedFilms={props.isSavedFilms}
                         savedFilms={props.savedFilms}
-                        isSaved={compareFilm(props.savedFilms, film)} />
+                        isSaved={compareFilm(props.savedFilms, film)} 
+                        />
                 )
             })
             }

@@ -8,9 +8,9 @@ import FilmError from "../FilmError/FilmError";
 
 function Movies (props) {
 
-    const [keyWord, setKeyWord] = React.useState(localStorage.getItem('textSearch') || '');
-    const savedFilmsStorage = localStorage.getItem('filteredFilms');
-    const [filteredFilms, setFilteredFilms] = React.useState(JSON.parse(savedFilmsStorage) || []);
+    const [keyWord, setKeyWord] = React.useState(localStorage.getItem('textSearch') || ''); // Сохраняем ключевое слово
+    const savedFilmsStorage = localStorage.getItem('filteredFilms'); // Достаём отфильтрованные фильмы из локального хранилища
+    const [filteredFilms, setFilteredFilms] = React.useState(JSON.parse(savedFilmsStorage) || []); // Переменная с отфильтрованными фильмами
 
     //useEffect записывает в переменную состояние чекбокса
     React.useEffect(() => {
@@ -25,7 +25,9 @@ function Movies (props) {
     function handleSubmit (e) {
         e.preventDefault();
 
-        const filter = props.films.filter(film => film.nameRU.toLowerCase().includes(keyWord.toLowerCase()))
+        const filter = props.films.filter(film => {
+            return film.nameRU.toLowerCase().includes(keyWord.toLowerCase()) || film.nameEN.toLowerCase().includes(keyWord.toLowerCase());
+        })
 
         if(filter.length === 0) {
             props.setErrorText('Ничего не найдено');
@@ -46,7 +48,7 @@ function Movies (props) {
         if(props.isChecked) {
             return setFilteredFilms(() => {
                 const filter = props.films.filter( film => {
-                    return film.nameRU.toLowerCase().includes(keyWord.toLowerCase());;
+                    return film.nameRU.toLowerCase().includes(keyWord.toLowerCase()) || film.nameEN.toLowerCase().includes(keyWord.toLowerCase());
                 })
                 localStorage.setItem('filteredFilms', JSON.stringify(filter));
                 return filter;
@@ -54,8 +56,8 @@ function Movies (props) {
         } else {
             return setFilteredFilms(() => {
                 const filter = props.films.filter( film => {
-                    if(film.duration <= 40 && film.nameRU.toLowerCase().includes(keyWord.toLowerCase())) {
-                        return film;
+                    if(film.duration <= 40) {
+                        return film.nameRU.toLowerCase().includes(keyWord.toLowerCase()) || film.nameEN.toLowerCase().includes(keyWord.toLowerCase());
                     }
                 })
                 localStorage.setItem('filteredFilms', JSON.stringify(filter));

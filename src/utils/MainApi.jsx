@@ -146,7 +146,7 @@ export function getFilms () {
         if(res.ok) {
             return res.json()
         } else {
-            return res.status;
+            return [];
         }
     })
     .then(data => data)

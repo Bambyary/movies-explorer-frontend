@@ -8,8 +8,8 @@ import FilmError from "../FilmError/FilmError";
 
 function SavedMovies(props) {
 
-  const [keyWord, setKeyWord] = React.useState('');
-  const [filteredFilms, setFilteredFilms] = React.useState(props.savedFilms);
+  const [keyWord, setKeyWord] = React.useState(''); // Сохраняем ключевое слово
+  const [filteredFilms, setFilteredFilms] = React.useState(props.savedFilms); // Переменная с отфильтрованными фильмами
 
   //useEffect записывает в переменную состояние чекбокса
   React.useEffect(() => {
@@ -28,10 +28,13 @@ function SavedMovies(props) {
     setFilteredFilms(props.savedFilms);
   }, [props.isLoggedIn, props.savedFilms, keyWord])
 
+  //При клике на кнопку поиска происходит фильтрация фильмов и сохранение в localStorage
   function handleSubmit (e) {
     e.preventDefault();
 
-    const filter = props.savedFilms.filter(film => film.nameRU.toLowerCase().includes(keyWord.toLowerCase()))
+    const filter = props.savedFilms.filter(film => {
+      return film.nameRU.toLowerCase().includes(keyWord.toLowerCase()) || film.nameEN.toLowerCase().includes(keyWord.toLowerCase());
+    })
     
     if(filter.length === 0) {
       props.setErrorText('Ничего не найдено');
@@ -48,14 +51,14 @@ function handleCheckbox () {
   if(props.isChecked) {
       return setFilteredFilms(() => {
           return props.savedFilms.filter( film => {
-              return film.nameRU.toLowerCase().includes(keyWord.toLowerCase());;
+              return film.nameRU.toLowerCase().includes(keyWord.toLowerCase()) || film.nameEN.toLowerCase().includes(keyWord.toLowerCase());
           })
       })
   } else {
       return setFilteredFilms(() => {
           return props.savedFilms.filter( film => {
-              if(film.duration <= 40 && film.nameRU.toLowerCase().includes(keyWord.toLowerCase())) {
-                  return film;
+              if(film.duration <= 40) {
+                  return film.nameRU.toLowerCase().includes(keyWord.toLowerCase()) || film.nameEN.toLowerCase().includes(keyWord.toLowerCase());
               }
           })
       })
