@@ -58,8 +58,9 @@ function App() {
     //Запускаем функцию с токеном
     tokenCheck();
 
-    if(films.length === 0) {
-        setIsLoading(true);
+    if (isLoggedIn) {
+
+      setIsLoading(true);
 
         // Получаем фильмы со стороннего апи
         getMovies()
@@ -77,10 +78,8 @@ function App() {
         .finally(() => {
             setIsLoading(false);  
         });
-    }
 
     //GET-запрос на получаение фильмов со своего апи
-    if (isLoggedIn) {
       getFilms()
       .then(data => {
         setSavedFilms(data);

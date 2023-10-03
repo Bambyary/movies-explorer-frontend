@@ -28,7 +28,7 @@ function SavedMovies(props) {
     setFilteredFilms(props.savedFilms);
   }, [props.isLoggedIn, props.savedFilms, keyWord])
 
-  //При клике на кнопку поиска происходит фильтрация фильмов и сохранение в localStorage
+  //При клике на кнопку поиска происходит фильтрация фильмов
   function handleSubmit (e) {
     e.preventDefault();
 
