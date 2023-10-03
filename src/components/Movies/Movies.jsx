@@ -6,6 +6,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import '../Main/Main.css';
 import FilmError from "../FilmError/FilmError";
 import Preloader from "../Preloader/Preloader";
+import { handleMoreFilms } from '../../utils/constants';
 
 function Movies (props) {
 
@@ -67,12 +68,6 @@ function Movies (props) {
         }
     }
 
-    //Функция, которая добавляет определённое количество фильмов к найденным фильмам
-    function handleMoreFilms () {
-        const newFilmsToShow = window.innerWidth >= 1000 ? props.filmsToShow + 3 : props.filmsToShow + 2;
-        props.setFilmsToShow(newFilmsToShow);
-    }
-
     return (
         <>
             <Header isLoggedIn={props.isLoggedIn} />
@@ -103,7 +98,9 @@ function Movies (props) {
                     {filteredFilms.length > props.filmsToShow && (
                         <section className="main__button-container">
                         <button
-                            onClick={handleMoreFilms}
+                            onClick={() => {
+                                handleMoreFilms( props.filmsToShow, props.setFilmsToShow)
+                            }}
                             className="main__button"
                             type="button"
                         >

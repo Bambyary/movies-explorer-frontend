@@ -13,6 +13,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { getMovies } from '../../utils/MoviesApi';
 import { createFilm, getFilms, deleteFilm } from '../../utils/MainApi';
+import { getFilmsToShow } from '../../utils/constants';
 
 function App() {
 
@@ -107,22 +108,6 @@ function clickDeleteFilm (data) {
         setSavedFilms(state => state.filter(item => item._id !== data._id))
       })
       .catch(err => console.log(`Возникла ошибка ${err}`))
-}
-
-//Функция, определяющая сколько карточек отобразить
-function getFilmsToShow () {
-
-  if(window.innerWidth >= 1000) {
-    return 12;
-  }
-
-  if(window.innerWidth < 1000 && window.innerWidth > 550) {
-    return 8;
-  }
-
-  if (window.innerWidth <= 550) {
-    return 5;
-  }
 }
 
 

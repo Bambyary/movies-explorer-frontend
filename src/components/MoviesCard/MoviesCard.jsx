@@ -3,11 +3,9 @@ import './MoviesCard.css';
 import save from '../../images/save.svg';
 import clear from '../../images/delete.svg';
 import { useLocation } from 'react-router-dom';
+import { convertDuration } from '../../utils/constants';
 
 function MoviesCard (props) {
-
-    const hours = Math.floor(props.filmData.duration / 60); // Выводим количество часов
-    const minutes = props.filmData.duration % 60; // Выводим количество минут
 
     const location = useLocation();
 
@@ -42,7 +40,7 @@ function MoviesCard (props) {
 
             <div className="card__info">
                 <h2 className="card__title">{props.filmData.nameRU}</h2>
-                <p className="card__time">{`${hours}ч ${minutes}м`}</p>
+                <p className="card__time">{convertDuration(props.filmData.duration)}</p>
             </div>
         </li>
     )
