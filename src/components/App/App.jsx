@@ -118,9 +118,25 @@ function clickDeleteFilm (data) {
           <Routes>
             <Route path='/' element={ <Main isLoggedIn={isLoggedIn} />} />
             <Route path='*' element={<NotFound />} />
-            <Route path='signin' element={<ProtectedRoute element={Login} isLoggedIn={!isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path='signup' element={<ProtectedRoute element={Register} isLoggedIn={!isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser} setSavedFilms={setSavedFilms} />} />
+            <Route path='signin' element={<ProtectedRoute 
+              element={Login} 
+              isLoggedIn={!isLoggedIn} 
+              setIsLoggedIn={setIsLoggedIn}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading} />} />
+            <Route path='signup' element={<ProtectedRoute 
+              element={Register} 
+              isLoggedIn={!isLoggedIn} 
+              setIsLoggedIn={setIsLoggedIn}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading} />} />
+            <Route path='/profile' element={<ProtectedRoute 
+              element={Profile} isLoggedIn={isLoggedIn} 
+              setIsLoggedIn={setIsLoggedIn} 
+              setCurrentUser={setCurrentUser} 
+              setSavedFilms={setSavedFilms}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading} />} />
             <Route path='/movies' element={<ProtectedRoute element={Movies} 
               isLoggedIn={isLoggedIn}
               isChecked={isChecked}

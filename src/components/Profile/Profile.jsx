@@ -78,6 +78,7 @@ function Profile (props) {
     //Функция, отвечающая за отправку данных на сервер
     function handleSubmit (e) {
         e.preventDefault();
+        props.setIsLoading(true);
 
         editProfile(name, email)
         .then(data => {
@@ -91,6 +92,12 @@ function Profile (props) {
                 setSubmitText('При обновлении профиля произошла ошибка.')
             }
         })
+        .catch(err => {
+            return `Возникла ошибка: ${err}`;
+        })
+        .finally(() => {
+            props.setIsLoading(false);
+        }) 
     }
 
     //Функции, меняющие состояние фокуса на полях ввода
@@ -150,7 +157,7 @@ function Profile (props) {
                         :
                         <div className="profile__button-save-container">
                             <span className="profile__error">{submitText}</span>
-                            <button className={`profile__button-save ${ !saveButtonValidity || !formValid ? 'profile__button-save_disabled' : ''}`} disabled={!saveButtonValidity || !formValid} type="submit" >Сохранить</button>
+                            <button className={`profile__button-save ${ !saveButtonValidity || !formValid || props.isLoading ? 'profile__button-save_disabled' : ''}`} disabled={!saveButtonValidity || !formValid || props.isLoading} type="submit" >Сохранить</button>
                         </div>}
                     </form>
                 </section>

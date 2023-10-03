@@ -61,6 +61,8 @@ function Login (props) {
     //Функция авторизации
     function handleSubmit (e) {
         e.preventDefault()
+
+        props.setIsLoading(true)
         
         authorize(email, password)
         .then(data => {
@@ -78,6 +80,9 @@ function Login (props) {
         .catch(err => {
             return `Возникла ошибка: ${err}`
         })
+        .finally(() => {
+            props.setIsLoading(false)
+        })
     }
 
     return (
@@ -90,7 +95,8 @@ function Login (props) {
             name='registration-form'
             formValid={formValid}
             handleSubmit={handleSubmit}
-            submitError={submitError}>
+            submitError={submitError}
+            isLoading={props.isLoading}>
                 <section className="register">
                     <fieldset className="register__fieldset">
                         <label className="register__label" htmlFor='register-email'>

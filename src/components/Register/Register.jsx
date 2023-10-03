@@ -6,6 +6,7 @@ import { register } from '../../utils/MainApi';
 import { useNavigate } from 'react-router-dom';
 
 function Register (props) {
+ 
 
     //Создаём переменные, в которые будут записываться значения из полей ввода
     const [name, setName] = React.useState('');
@@ -70,6 +71,7 @@ function Register (props) {
     //Функция отвечает за регистрацию
     function handleSubmit (e) {
         e.preventDefault();
+        props.setIsLoading(true)
 
         register(name, email, password)
         .then(data => {
@@ -86,6 +88,9 @@ function Register (props) {
         .catch(err => {
             return `Возникла ошибка: ${err}`
         })
+        .finally(() => {
+            props.setIsLoading(false);
+        })
     }
 
     return (
@@ -99,6 +104,7 @@ function Register (props) {
             formValid={formValid}
             handleSubmit={handleSubmit}
             submitError={submitError}
+            isLoading={props.isLoading}
             >
                 <section className="register">
                     <fieldset className="register__fieldset register__fieldset_margin">

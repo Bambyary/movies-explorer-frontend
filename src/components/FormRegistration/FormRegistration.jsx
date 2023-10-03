@@ -14,8 +14,8 @@ function FormRegistration (props) {
                     onSubmit={props.handleSubmit} noValidate>
                     {props.children}
                     <span className="form-registration__error">{props.submitError}</span>
-                    <button className={`form-registration__button ${!props.formValid && 'form-registration__button_inactive'}`} 
-                        disabled={!props.formValid} type='submit'>{props.button}</button>
+                    <button className={`form-registration__button ${!props.formValid || props.isLoading && 'form-registration__button_inactive'}`} 
+                        disabled={!props.formValid || props.isLoading} type='submit'>{props.button}</button>
                 </form>
                 <div className="form-registration__container">
                     <p className="form-registration__text">{props.text}</p>
