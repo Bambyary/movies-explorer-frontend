@@ -5,6 +5,7 @@ import Footer from "../Footer/Footer";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import '../Main/Main.css';
 import FilmError from "../FilmError/FilmError";
+import Preloader from "../Preloader/Preloader";
 
 function Movies (props) {
 
@@ -76,30 +77,43 @@ function Movies (props) {
         <>
             <Header isLoggedIn={props.isLoggedIn} />
             <main className="main">
-                <SearchForm id='search-form-movies' 
-                    handleSubmit={handleSubmit} 
-                    keyWord={keyWord} 
-                    setKeyWord={setKeyWord}
-                    handleCheckbox={handleCheckbox}
-                    isChecked={props.isChecked}
-                     />
-
-                {filteredFilms.length > 0 ? 
-                    <MoviesCardList 
-                        isLoading={props.isLoading} 
-                        films={filteredFilms.slice(0, props.filmsToShow)} 
+                {props.isLoading ? (
+                    <Preloader />
+                ) : (
+                    <>
+                    <SearchForm
+                        id="search-form-movies"
+                        handleSubmit={handleSubmit}
+                        keyWord={keyWord}
+                        setKeyWord={setKeyWord}
+                        handleCheckbox={handleCheckbox}
+                        isChecked={props.isChecked}
+                    />
+                    {filteredFilms.length > 0 ? (
+                        <MoviesCardList
+                        isLoading={props.isLoading}
+                        films={filteredFilms.slice(0, props.filmsToShow)}
                         onClickSave={props.onClickSave}
                         onClickDelete={props.onClickDelete}
-                        savedFilms={props.savedFilms} />
-                 :
-                    <FilmError keyWord={keyWord} errorText={props.errorText} />}
-
-                {filteredFilms.length > props.filmsToShow &&
-                    <section className="main__button-container">
-                        <button onClick={handleMoreFilms} className="main__button" type="button">Ещё</button>
-                    </section>
-                }
-            </main>
+                        savedFilms={props.savedFilms}
+                        />
+                    ) : (
+                        <FilmError keyWord={keyWord} errorText={props.errorText} />
+                    )}
+                    {filteredFilms.length > props.filmsToShow && (
+                        <section className="main__button-container">
+                        <button
+                            onClick={handleMoreFilms}
+                            className="main__button"
+                            type="button"
+                        >
+                            Ещё
+                        </button>
+                        </section>
+                    )}
+                    </>
+                )}
+                </main>
             <Footer />
         </>
     )
