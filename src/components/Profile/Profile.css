@@ -24,7 +24,7 @@
 .profile__info {
     width: 100%;
     border: none;
-    padding: 0 0 19px;
+    padding: 0;
     margin: 0;
 }
 
@@ -52,10 +52,16 @@
     display: block;
     text-align: right;
     float: right;
+    background-color: #fff;
 }
 
 .profile__input::placeholder {
     color: #000000;
+}
+
+.profile__input_border {
+    border: 1px solid #000;
+    border-radius: 3px;
 }
 
 .profile__input:focus {
@@ -104,6 +110,17 @@
     margin: 189px auto 0;
 }
 
+.profile__error-input {
+    display: block;
+    width: 100%;
+    margin: 0;
+    color: #FF004C;
+    text-align: end;
+    min-height: 14px;
+    font-size: 10px;
+    padding: 5px 0 0;
+}
+
 .profile__error {
     display: block;
     width: 100%;
@@ -111,6 +128,7 @@
     text-align: center;
     padding-bottom: 20px;
     min-height: 14px;
+    font-size: 11px;
 }
 
 .profile__button-save {
@@ -127,6 +145,7 @@
 .profile__button-save_disabled {
     background-color: #F8F8F8;
     color: #C2C2C2;
+    cursor: default;
 }
 
 .profile__button-save:hover {

@@ -139,6 +139,7 @@
     .navigation-menu__container_active {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
 
         animation-name: burger-active;
         animation-duration: .4s;

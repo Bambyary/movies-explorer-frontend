@@ -9,20 +9,32 @@
 .search__fieldset {
     width: 87%;
     margin: 70px auto 72px;
-    height: 34px;
     border-radius: 9px;
     background-color: #FDFDFD;
     box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
-    padding: 18px 0 18px 22px;
+    padding: 18px 0 4px 22px;
     display: flex;
     align-items: center;
     border: none;
 }
 
-.search__container {
+.search__flex {
     width: 87%;
     display: flex;
-    padding-right: 19px;
+    flex-direction: column;
+}
+
+.search__error {
+    display: block;
+    min-height: 14px;
+    color: #FF4062;
+    font-size: 10px;
+    padding-left: 35px;
+}
+
+.search__container {
+    width: 100%;
+    display: flex;
     border-right: 1px solid #CBCBCB;
 }
 
@@ -32,7 +44,7 @@
 }
 
 .search__label {
-    width: 90%;
+    width: 87%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,6 +57,7 @@
     border: none;
     width: 100%;
     padding: 0 0 0 5px;
+    border-radius: 5px;
 }
 
 .search__input::placeholder {
@@ -73,10 +86,23 @@
     opacity: .8;
 }
 
+.search__button_inactive {
+    background-color: #C4C4C4;
+    cursor: default;
+}
+
+.search__button_inactive:hover {
+    opacity: 1;
+}
+
 @media screen and (max-width: 800px) {
     .search__fieldset {
         width: 90%;
         margin: 80px auto 112px;
+    }
+
+    .search__label {
+        width: 77%;
     }
 
     .search__input {
@@ -94,8 +120,11 @@
     .search__fieldset {
         flex-direction: column;
         width: 93.75%;
-        margin: 81px auto 111px;
+        margin: 64px auto 23px;
         padding-left: 0;
+        border: none;
+        background-color: none;
+        box-shadow: none;
     }
 
     .search__container {
@@ -115,6 +144,18 @@
     .search__input::placeholder {
         font-size: 14px;
         line-height: 1.4;
+    }
+
+    .search__error {
+        padding: 0;
+    }
+
+    .search__flex {
+        border-radius: 9px;
+        background-color: #FDFDFD;
+        box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
+        padding: 18px 19px 4px 19px;
+        width: 87%;
     }
 
 }

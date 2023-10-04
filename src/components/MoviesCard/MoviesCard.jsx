@@ -1,31 +1,46 @@
 import React from "react";
 import './MoviesCard.css';
-import film from '../../images/film.svg';
 import save from '../../images/save.svg';
 import clear from '../../images/delete.svg';
 import { useLocation } from 'react-router-dom';
+import { convertDuration } from '../../utils/constants';
 
 function MoviesCard (props) {
 
-    const [isSaved, setIsSaved] = React.useState(true);
-
     const location = useLocation();
+
+    //Функция передаёт данные в App.jsx в clickAddFilm
+    function handleClickSave () {
+        if(props.isSaved) {
+            props.onClickDelete(props.savedFilms.filter(item => item.movieId === props.filmData.id)[0])
+        } else {
+            props.onClickSave(props.filmData);
+        }
+    }
+
+    // Функция передаёт данные в App.jsx в clickDeleteFilm
+    function handleClickDelete () {
+        props.onClickDelete(props.filmData)
+    }
+
 
     return (
         <li className="card">
-            <img className="card__img" src={film} alt={props.title} />
+            <a className="card__link" href={props.filmData.trailerLink} target='_blank' >
+                <img className="card__img" src={props.isSavedFilms ? props.filmData.image : `https://api.nomoreparties.co/${props.filmData.image.url}`} alt={props.title} />
+            </a>
 
-            {isSaved ?    
-                (location.pathname === '/movies' && <button className="card__button-save" type="button"><img className="card__img-save" src={save} alt="Фильм сохранён" /></button>)
+            {props.isSaved ?
+                (location.pathname === '/movies' && <button className="card__button-save" type="button" onClick={handleClickSave} ><img className="card__img-save" src={save} alt="Фильм сохранён" /></button>)
                 :
-                (location.pathname === '/movies' && <button className="card__button" type="button">Сохранить</button>)
+                (location.pathname === '/movies' && <button className="card__button" type="button" onClick={handleClickSave} >Сохранить</button>)
                 }
             
-            {location.pathname === '/saved-movies' && <button className="card__button-save" type="button"><img className="card__img-save" src={clear} alt="Удаление фильма" /></button>}
+            {location.pathname === '/saved-movies' && <button className="card__button-save" type="button" onClick={handleClickDelete} ><img className="card__img-save" src={clear} alt="Удаление фильма" /></button>}
 
             <div className="card__info">
-                <h2 className="card__title">{props.title}</h2>
-                <p className="card__time">1ч 17м</p>
+                <h2 className="card__title">{props.filmData.nameRU}</h2>
+                <p className="card__time">{convertDuration(props.filmData.duration)}</p>
             </div>
         </li>
     )

@@ -12,12 +12,12 @@
 .register__fieldset {
     width: 100%;
     border: none;
-    margin: 0 0 163px;
+    margin: 0 0 128px;
     padding: 0;
 }
 
 .register__fieldset_margin {
-    margin: 0 0 76px;
+    margin: 0 0 41px;
 }
 
 .register__input {
@@ -37,6 +37,10 @@
     outline: 1px solid #000;
 }
 
+.register__input_error:focus {
+    outline: 1px solid #FF4062;
+}
+
 .register__input_error {
     color: #FF4062;
 }
@@ -52,10 +56,10 @@
 @media screen and (max-width: 550px) {
 
     .register__fieldset {
-        margin: 0 0 251px;
+        margin: 0 0 218px;
     }
 
     .register__fieldset_margin {
-        margin-bottom: 166px;
+        margin-bottom: 131px;
     }
 }

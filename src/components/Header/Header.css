@@ -52,6 +52,7 @@
     text-align: center;
     font-size: 12px;
     border: none;
+    cursor: pointer;
 }
 
 .header__button:hover {

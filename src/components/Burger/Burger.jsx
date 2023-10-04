@@ -3,11 +3,12 @@ import './Burger.css';
 import burger from '../../images/burger.svg';
 import Navigation from "../Navigation/Navigation";
 
-function Burger (props) {
+function Burger () {
 
-    const [isBurgerActive, setIsBurgerActive] = React.useState(false);
-    const [isNavigationActive, setIsNavigationActive] = React.useState(false);
+    const [isBurgerActive, setIsBurgerActive] = React.useState(false); // Переменная отвечает за активное/неактивное состояние бургера
+    const [isNavigationActive, setIsNavigationActive] = React.useState(false); // Переменная отвечает за автивное/неактивное состояние навигации
 
+    // Функция меняет состояние переменной бургера и навигации
     function clickBurger () {
         setIsBurgerActive(true);
         setIsNavigationActive(true);
