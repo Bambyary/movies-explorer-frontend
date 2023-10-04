@@ -86,10 +86,8 @@ function Register (props) {
 
         })
         .catch(err => {
-            return `Возникла ошибка: ${err}`
-        })
-        .finally(() => {
             props.setIsLoading(false);
+            return `Возникла ошибка: ${err}`
         })
     }
 

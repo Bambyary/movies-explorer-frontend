@@ -93,11 +93,9 @@ function Profile (props) {
             }
         })
         .catch(err => {
+            props.setIsLoading(false);
             return `Возникла ошибка: ${err}`;
         })
-        .finally(() => {
-            props.setIsLoading(false);
-        }) 
     }
 
     //Функции, меняющие состояние фокуса на полях ввода
