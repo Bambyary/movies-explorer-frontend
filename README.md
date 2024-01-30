@@ -49,4 +49,3 @@
 ## Ссылки
 
 * [Репозиторий с бэкендом](https://github.com/Bambyary/movies-explorer-api)
-* [Дипломная работа](https://sorokina-diplom.nomoredomainsicu.ru)
