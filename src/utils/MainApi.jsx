@@ -1,5 +1,5 @@
-// const BASE_URL = 'http://127.0.0.1:3000';
-const BASE_URL = 'https://api.sorokina-diplom.nomoredomainsicu.ru';
+const BASE_URL = 'http://127.0.0.1:3000';
+// const BASE_URL = 'https://api.sorokina-diplom.nomoredomainsicu.ru';
 
 //Запрос к серверу на регистрацию
 export function register (name, email, password) {
