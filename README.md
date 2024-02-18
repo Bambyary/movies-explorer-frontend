@@ -25,19 +25,23 @@
 
 ## Установка и запуск проекта
 
-Клонировать репозиторий:
+* Клонировать репозиторий:
 
 `git clone git@github.com:Bambyary/movies-explorer-frontend.git`
 
-Установить зависимости:
+* Установить зависимости:
 
 `npm i`
 
-Запустить сервер в папке с backend-частью:
+* Клонировать и установить [Репозиторий с бэкендом](https://github.com/Bambyary/movies-explorer-api) по инструкции в репозитории. Запустить сервер:
 
 `npm run dev`
 
-Запустить frontend-часть:
+* Перейти в папку 'movies-explorer-frontend':
+
+`cd movies-explorer-frontend`
+
+* Запустить frontend-часть:
 
 `npm run start`
 
