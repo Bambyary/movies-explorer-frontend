@@ -29,10 +29,6 @@
 
 `git clone git@github.com:Bambyary/movies-explorer-frontend.git`
 
-* Перейти в папку 'movies-explorer-frontend':
-
-`cd movies-explorer-frontend`
-
 * Установить зависимости:
 
 `npm i`
@@ -40,6 +36,10 @@
 * Клонировать и установить [Репозиторий с бэкендом](https://github.com/Bambyary/movies-explorer-api) по инструкции в репозитории. Запустить сервер:
 
 `npm run dev`
+
+* Перейти в папку 'movies-explorer-frontend':
+
+`cd movies-explorer-frontend`
 
 * Запустить frontend-часть:
 
