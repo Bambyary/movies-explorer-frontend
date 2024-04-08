@@ -33,12 +33,9 @@
     font-weight: 500;
 }
 
-.register__input:focus {
-    outline: 1px solid #000;
-}
-
 .register__input_error:focus {
     outline: 1px solid #FF4062;
+
 }
 
 .register__input_error {
